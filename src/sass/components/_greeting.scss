@@ -1,0 +1,93 @@
+.greeting {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	color: var(--tint1);
+	background-color: var(--dark);
+	padding: var(--p);
+	width: 50vw;
+
+	h1 {
+		font-size: 3rem;
+	}
+
+	h2 {
+		font-size: 2rem;
+	}
+
+	.choose-fighters,
+	.choose-canvas {
+		display: flex;
+		flex-direction: column;
+		gap: var(--g);
+		padding: var(--p) 0;
+
+		.fighter-options,
+		.canvas-options {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: var(--g);
+
+			button {
+				cursor: pointer;
+				height: 200px;
+				flex: 1;
+				background-repeat: no-repeat;
+				background-position: center;
+				border: none;
+			}
+		}
+
+		.fighter-options {
+			#red {
+				background-image: url("../../assets/fighter/red.png");
+				background-color: var(--red);
+			}
+
+			#blue {
+				background-image: url("../../assets/fighter/blue.png");
+				background-color: var(--blue);
+			}
+
+			#green {
+				background-image: url("../../assets/fighter/green.png");
+				background-color: var(--green);
+			}
+		}
+
+		.canvas-options {
+			#purple {
+				background-image: url("../../assets/space/purple.png");
+			}
+
+			#darkpurple {
+				background-image: url("../../assets/space/darkpurple.png");
+			}
+
+			#blue {
+				background-image: url("../../assets/space/blue.png");
+			}
+
+			#black {
+				background-image: url("../../assets/space/black.png");
+			}
+		}
+	}
+
+	.start {
+		background-color: var(--tint1);
+		border: none;
+		width: 50%;
+		height: calc(var(--f-h) * 2);
+		cursor: pointer;
+		font-size: 3rem;
+		color: var(--dark);
+
+		&:disabled {
+			background-color: gray;
+		}
+	}
+}

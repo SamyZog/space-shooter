@@ -1,0 +1,19 @@
+.space {
+	position: relative;
+	height: 100vh;
+	background-image: url("../../assets/space/black.png");
+	animation-duration: 5000ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-name: fly;
+}
+
+@keyframes fly {
+	from {
+		background-position-y: 0;
+	}
+
+	to {
+		background-position-y: 256px;
+	}
+}
