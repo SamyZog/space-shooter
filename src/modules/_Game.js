@@ -12,23 +12,7 @@ class Game {
 			this.killEnemy();
 			requestAnimationFrame(this.engine);
 		};
-		this.killEnemy = () => {
-			const enemyArray = [...document.querySelectorAll(".enemy")];
-			const lasersArray = [...document.querySelectorAll(".laser")];
-
-			enemyArray.forEach((enemy) => {
-				const enemyRect = enemy.getBoundingClientRect();
-				for (let i = 0; i < lasersArray.length; i++) {
-					const laserRect = lasersArray[i].getBoundingClientRect();
-					if (this.hit(laserRect, enemyRect)) {
-						enemy.remove();
-						lasersArray[i].remove();
-					} else {
-						continue;
-					}
-				}
-			});
-		};
+		this.killEnemy = () => {};
 		this.killFighter = () => {};
 		this.init = (fighter) => {
 			// initiate attributes for fighter class

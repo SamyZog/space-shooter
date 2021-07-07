@@ -103,7 +103,6 @@ const START = () => {
 		hud.style.display = "flex";
 		game = new SpaceShooter();
 		game.setup(gameSettings);
-		console.log(game);
 		greetingModal.style.display = "none";
 	}
 };

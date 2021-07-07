@@ -9,6 +9,7 @@ class Shooter {
 		this.canShoot = true;
 		this.fireRate = fireRate;
 		this.cool = 0;
+		this.toggledPress = true;
 		this.activeControlKeys = {
 			ArrowLeft: false,
 			ArrowRight: false,
@@ -90,6 +91,14 @@ class Shooter {
 			this.maxFireRateTime = Date.now();
 			return;
 		}
+
+		// load laser sounds
+		import("../assets/sound-effects/sfx_laser2.ogg").then((res) => {
+			const audioEl = new Audio(res.default);
+			audioEl.preload = true;
+			audioEl.play();
+		});
+
 		cooldownBar.style.top = `-${(this.cool += 25)}%`;
 
 		const laser = document.createElement("div");

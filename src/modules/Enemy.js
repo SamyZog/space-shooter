@@ -1,7 +1,9 @@
 class Enemy {
-	constructor() {}
+	constructor(element) {
+		this.element = element;
+	}
 
-	init() {}
+	fire() {}
 }
 
 export default Enemy;
