@@ -1,16 +1,38 @@
 import EnemyBox from "./EnemyBox";
 import Shooter from "./Shooter";
 
+let paused = false;
+
 class SpaceShooter {
 	constructor() {
 		this.shooter = "";
-		this.enemies = "";
+		this.enemyContainer = "";
 		this.engine = () => {
+			if (paused) {
+				return;
+			}
 			this.shooter.actions();
+			this.enemyContainer.actions();
 			this.monitorInvaderHit();
 			requestAnimationFrame(this.engine);
 		};
+
 		this.setup = ({ type, difficulty }) => {
+			document.body.addEventListener("keydown", (e) => {
+				if (e.key === "p" || e.key === "P") {
+					paused = !paused;
+					this.shooter.canShoot = false;
+					document.getAnimations().forEach((animation) => animation.pause());
+				} else {
+					return;
+				}
+				if (!paused) {
+					this.engine();
+					this.shooter.canShoot = true;
+					document.getAnimations().forEach((animation) => animation.play());
+				}
+			});
+
 			// set game difficulty
 			this.difficulty = difficulty;
 
@@ -45,7 +67,7 @@ class SpaceShooter {
 
 			// set canvas in motion to simulate flying in space
 			const space = document.querySelector(".space");
-			space.animate([{ backgroundPositionY: 0 }, { backgroundPositionY: "256px" }], {
+			this.bgAnimation = space.animate([{ backgroundPositionY: 0 }, { backgroundPositionY: "256px" }], {
 				duration: 1500,
 				easing: "linear",
 				iterations: Infinity,

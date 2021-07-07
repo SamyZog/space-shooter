@@ -6,32 +6,33 @@ class EnemyBox {
 		this.difficulty = difficulty;
 	}
 
-	move() {
-		this.animationRef = this.element.animate([{ left: this.leftEdge }, { left: `${this.rightEdge}px` }], {
-			duration: this.speed,
-			easing: "linear",
-			fill: "forwards",
-		});
-
-		this.animationRef.finished.then((_) => {
-			this.element.style.top = `${(this.top += 42)}px`;
-			this.reverse();
-			this.animationRef.updatePlaybackRate((this.playbackRate += 0.25));
-		});
+	actions() {
+		this.move();
 	}
 
-	reverse() {
-		this.animationRef = this.element.animate([{ left: `${this.rightEdge}px` }, { left: this.leftEdge }], {
-			duration: this.speed,
-			easing: "linear",
-			fill: "forwards",
-		});
+	move() {
+		const enemiesRect = this.element.getBoundingClientRect();
 
-		this.animationRef.finished.then((_) => {
+		if (this.direction === 1) {
+			this.element.style.left = `${(this.leftEdge += this.playbackRate)}px`;
+		}
+
+		if (this.direction === -1) {
+			this.element.style.left = `${(this.rightEdge -= this.playbackRate)}px`;
+		}
+
+		if (enemiesRect.left < this.spaceEdges.left) {
 			this.element.style.top = `${(this.top += 42)}px`;
-			this.move();
-			this.animationRef.updatePlaybackRate((this.playbackRate += 0.25));
-		});
+			this.playbackRate += 0.25;
+			this.leftEdge = this.startLeft;
+			this.direction = 1;
+		}
+		if (enemiesRect.right > this.spaceEdges.right) {
+			this.element.style.top = `${(this.top += 42)}px`;
+			this.playbackRate += 0.25;
+			this.rightEdge = this.startRight;
+			this.direction = -1;
+		}
 	}
 
 	setDifficulty() {
@@ -43,7 +44,7 @@ class EnemyBox {
 					rows: 4,
 					columns: 6,
 				};
-				this.speed = 8000;
+				this.playbackRate = 1;
 				fireRate = 3000;
 				break;
 			case "moderate":
@@ -51,7 +52,7 @@ class EnemyBox {
 					rows: 5,
 					columns: 8,
 				};
-				this.speed = 5000;
+				this.playbackRate = 2;
 				fireRate = 2000;
 				break;
 			case "hard":
@@ -59,7 +60,7 @@ class EnemyBox {
 					rows: 6,
 					columns: 10,
 				};
-				this.speed = 3000;
+				this.playbackRate = 3;
 				fireRate = 1000;
 				break;
 		}
@@ -92,13 +93,21 @@ class EnemyBox {
 
 		space.appendChild(this.element);
 
-		// set initial positions
-		this.leftEdge = 0;
+		const boundingRect = space.getBoundingClientRect();
+
+		this.spaceEdges = {
+			top: boundingRect.top,
+			bottom: boundingRect.bottom,
+			left: boundingRect.left,
+			right: boundingRect.right,
+		};
 		this.top = 0;
-		// set right border of when the grid should drop and get closer to shooter
-		this.rightEdge = space.getBoundingClientRect().right - this.element.offsetWidth;
-		// initial playback rate
-		this.playbackRate = 1;
+		this.leftEdge = 0;
+		this.startLeft = 0;
+		this.rightEdge = this.spaceEdges.right - this.element.offsetWidth;
+		this.startRight = this.spaceEdges.right - this.element.offsetWidth;
+		this.direction = 1;
+
 		this.move();
 	}
 }

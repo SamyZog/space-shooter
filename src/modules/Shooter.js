@@ -95,7 +95,6 @@ class Shooter {
 		// load laser sounds
 		import("../assets/sound-effects/sfx_laser2.ogg").then((res) => {
 			const audioEl = new Audio(res.default);
-			audioEl.preload = true;
 			audioEl.play();
 		});
 
@@ -114,14 +113,14 @@ class Shooter {
 		laser.style.top = `${fighterY - laser.offsetHeight}px`;
 		laser.style.left = `${fighterX + fighterWidth / 2}px`;
 
-		const laserFireAnimation = laser.animate([{ top: `-${laser.offsetHeight}px` }], {
+		this.laserFireAnimation = laser.animate([{ top: `-${laser.offsetHeight}px` }], {
 			duration: this.fireRate,
 			fill: "forwards",
 			easing: "linear",
 		});
 
-		laserFireAnimation.finished.then((res) => {
-			// lasers first in first out
+		this.laserFireAnimation.finished.then((res) => {
+			// remove lasers when their animation finish
 			laser.remove();
 		});
 	}
