@@ -76,6 +76,11 @@ module.exports = (env, argv) => {
 					// emit files to this destination
 					generator: { filename: "assets/images/[contenthash][ext][query]" },
 				},
+				{
+					test: /\.ogg$/,
+					type: "asset/resource",
+					generator: { filename: "assets/audio/[contenthash][ext][query]" },
+				},
 			],
 		},
 

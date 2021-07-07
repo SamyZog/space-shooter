@@ -1,0 +1,10 @@
+.enemy-box {
+	gap: var(--g);
+
+	.enemy {
+		width: 100%;
+		height: 100%;
+		background-image: url("../../assets/enemy/black1.png");
+		background-size: cover;
+	}
+}

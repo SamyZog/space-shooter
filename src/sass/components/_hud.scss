@@ -1,0 +1,29 @@
+.hud {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	padding: var(--p) 0;
+	flex-basis: var(--hud-w);
+	background-color: var(--tint1);
+	opacity: 1;
+
+	.cooldown-meter {
+		position: relative;
+		background-image: linear-gradient(to bottom, red, yellow);
+		height: 50px;
+		width: 40%;
+		border-radius: 10px;
+		overflow: hidden;
+
+		.bar {
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			top: 0%;
+			background-color: var(--dark);
+			transition-duration: 100ms;
+			transition-property: top;
+		}
+	}
+}

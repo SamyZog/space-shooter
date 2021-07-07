@@ -8,6 +8,7 @@
 	background-color: var(--dark);
 	padding: var(--p);
 	width: 50vw;
+	border-radius: 10px;
 
 	h1 {
 		font-size: 3rem;
@@ -18,14 +19,16 @@
 	}
 
 	.choose-fighters,
-	.choose-canvas {
+	.choose-canvas,
+	.choose-difficulty {
 		display: flex;
 		flex-direction: column;
 		gap: var(--g);
 		padding: var(--p) 0;
 
-		.fighter-options,
-		.canvas-options {
+		.shooter-options,
+		.canvas-options,
+		.difficulty-options {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
@@ -33,15 +36,24 @@
 
 			button {
 				cursor: pointer;
-				height: 200px;
+				height: 100px;
 				flex: 1;
 				background-repeat: no-repeat;
 				background-position: center;
 				border: none;
+				cursor: pointer;
+				color: var(--dark);
+				font-size: 2rem;
 			}
 		}
 
-		.fighter-options {
+		.difficulty-options {
+			button {
+				background-color: var(--tint1);
+			}
+		}
+
+		.shooter-options {
 			#red {
 				background-image: url("../../assets/fighter/red.png");
 				background-color: var(--red);

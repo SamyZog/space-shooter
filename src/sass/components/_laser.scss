@@ -1,0 +1,6 @@
+.laser {
+	position: absolute;
+	width: var(--laser-w);
+	height: var(--laser-h);
+	transform: translate(-50%);
+}
