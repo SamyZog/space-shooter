@@ -74,13 +74,16 @@ const START = () => {
 
 	const setCanvasImage = (id) => {
 		// change canvas background image when user switches choices
-		import(`../assets/space/${id.toUpperCase()}.png`).then((res) => {
+		import(`../assets/space/${id.toLowerCase()}.png`).then((res) => {
 			space.style.backgroundImage = `url(${res.default})`;
 		});
 	};
 
 	const checkChoices = function () {
 		startButton.disabled = !(difficultyChosen && shooterChosen);
+		if (!startButton.disabled) {
+			startButton.focus();
+		}
 	};
 
 	function handleDifficultyChoice() {

@@ -9,6 +9,8 @@ class Shooter {
 		this.speed = speed;
 		this.canShoot = true;
 		this.coolDownBarHeightLevel = 0;
+		this.incrementLevel = 20;
+		this.decrementLevel = 1;
 		this.boundaries = null;
 		this.maxFireRateReachTime = null;
 		this.x = null;
@@ -42,11 +44,10 @@ class Shooter {
 	}
 
 	_incrementCoolDownBarHeightLevel = () => {
-		cooldownBar.style.top = `-${(this.coolDownBarHeightLevel += 25)}%`;
+		cooldownBar.style.top = `-${(this.coolDownBarHeightLevel += this.incrementLevel)}%`;
 	};
 
 	_setLiveShooterPosition() {
-		// try with this.x and this.y instead
 		this.shooterX = this.shooter.getBoundingClientRect().left;
 		this.shooterY = this.shooter.getBoundingClientRect().top;
 		this.shooterWidth = this.shooter.offsetWidth;

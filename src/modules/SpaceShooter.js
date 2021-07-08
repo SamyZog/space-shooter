@@ -1,4 +1,5 @@
 import { cooldownBar, space } from "./elements";
+import EnemyBox from "./EnemyBox";
 import Shooter from "./Shooter";
 
 class SpaceShooter {
@@ -18,7 +19,7 @@ class SpaceShooter {
 				return;
 			}
 
-			cooldownBar.style.top = `-${(this.shooter.coolDownBarHeightLevel -= 1)}%`;
+			cooldownBar.style.top = `-${(this.shooter.coolDownBarHeightLevel -= this.shooter.decrementLevel)}%`;
 		};
 
 		this.checkShootingPermission = () => {
@@ -39,6 +40,7 @@ class SpaceShooter {
 
 		this.gameLoop = () => {
 			this.shooter.actions();
+			this.enemyBox.actions();
 			this.checkShootingPermission();
 			this.decrementCoolDownBarHeightLevel();
 			requestAnimationFrame(this.gameLoop);
@@ -59,6 +61,8 @@ class SpaceShooter {
 		this.init = () => {
 			this.shooter = new Shooter(shooterSettings);
 			this.shooter.init();
+			this.enemyBox = new EnemyBox(difficultySettings);
+			this.enemyBox.init();
 			this.moveCanvas();
 			this.startGame();
 		};

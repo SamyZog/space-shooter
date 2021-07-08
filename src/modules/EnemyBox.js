@@ -1,129 +1,116 @@
-import { space, spaceBottom, spaceLeft, spaceRight, spaceTop } from "./elements";
+import { space, spaceLeft, spaceRight } from "./elements";
 import Enemy from "./Enemy";
 
 class EnemyBox {
-	constructor(element, difficulty) {}
-
-	_createElement() {}
-
-	actions() {
-		this.move();
+	constructor({ difficulty, enemySpeed, laserSpeed, enemyColumns, enemyRows, enemyLaserColor, height, width }) {
+		this.enemyBox = null;
+		this.enemyBoxRect = null;
+		this.enemyBoxWidth = null;
+		this.difficulty = difficulty;
+		this.enemySpeed = enemySpeed;
+		this.laserSpeed = laserSpeed;
+		this.enemyColumns = enemyColumns;
+		this.enemyRows = enemyRows;
+		this.enemyLaserColor = enemyLaserColor;
+		this.height = height;
+		this.width = width;
+		this.direction = 1;
+		this.top = 0;
+		this.leftStartPosition = 0;
+		this.currentLeftPosition = 0;
+		this.rightStartPosition = null;
+		this.currentRightPosition = null;
 	}
 
-	move() {
-		const enemiesRect = this.element.getBoundingClientRect();
+	actions() {
+		this._move();
+	}
+
+	// movement
+
+	_move() {
+		this._moveHorizontally();
+		this._moveVertically();
+	}
+
+	_moveHorizontally() {
+		let enemyBoxLeftStyle;
 
 		if (this.direction === 1) {
-			this.element.style.left = `${(this.leftEdge += this.playbackRate)}px`;
+			enemyBoxLeftStyle = this.currentLeftPosition += this.enemySpeed;
 		}
-
 		if (this.direction === -1) {
-			this.element.style.left = `${(this.rightEdge -= this.playbackRate)}px`;
+			enemyBoxLeftStyle = this.currentRightPosition -= this.enemySpeed;
 		}
 
-		if (enemiesRect.left < this.spaceEdges.left) {
-			this.element.style.top = `${(this.top += 42)}px`;
-			this.playbackRate += 0.25;
-			this.leftEdge = this.startLeft;
+		this.enemyBox.style.left = `${enemyBoxLeftStyle}px`;
+	}
+
+	_moveVertically() {
+		this.enemyBoxRect = this.enemyBox.getBoundingClientRect();
+
+		if (this.enemyBoxRect.left < spaceLeft) {
+			this.top += this.height;
+			this.enemyBox.style.top = `${this.top}px`;
+			this.enemySpeed += 0.25;
+			this.currentLeftPosition = this.leftStartPosition;
 			this.direction = 1;
 		}
-		if (enemiesRect.right > this.spaceEdges.right) {
-			this.element.style.top = `${(this.top += 42)}px`;
-			this.playbackRate += 0.25;
-			this.rightEdge = this.startRight;
+		if (this.enemyBoxRect.right > spaceRight) {
+			this.top += this.height;
+			this.enemyBox.style.top = `${this.top}px`;
+			this.enemySpeed += 0.25;
+			this.currentRightPosition = this.rightStartPosition;
 			this.direction = -1;
 		}
 	}
 
-	setSettings() {
-		switch (this.difficulty) {
-			case "easy":
-				this.grid = {
-					rows: 4,
-					columns: 6,
-				};
-				this.playbackRate = 1;
-				this.fireRate = 3000;
-				this.enemyLaserColor = "#5F9EA0";
-				break;
-			case "moderate":
-				this.grid = {
-					rows: 5,
-					columns: 8,
-				};
-				this.playbackRate = 2;
-				this.fireRate = 2000;
-				this.enemyLaserColor = "#FF8C00";
-				break;
-			case "hard":
-				this.grid = {
-					rows: 6,
-					columns: 10,
-				};
-				this.playbackRate = 3;
-				this.fireRate = 1000;
-				this.enemyLaserColor = "#F0FFFF";
-				break;
-		}
-	}
+	// initialization
 
 	init() {
-		this.setSettings();
+		const enemyContainer = document.createElement("div");
+		this.enemyBox = enemyContainer;
+		enemyContainer.classList.add("enemy-box");
 
-		this.element.style.gridTemplateColumns = `repeat(${this.grid.columns}, ${
-			this.difficulty === "moderate" ? "5.15" : "4.65"
-		}rem)`;
-		this.element.style.gridTemplateRows = `repeat(${this.grid.rows}, 4.2rem)`;
+		enemyContainer.style.gridTemplateColumns = `repeat(${this.enemyColumns}, ${this.width}px)`;
+		enemyContainer.style.gridTemplateRows = `repeat(${this.enemyRows}, ${this.height}px)`;
 
-		const cellsArray = [...Array(this.grid.columns * this.grid.rows)];
+		this._populateEnemyContainer();
 
-		// fill the grid
-		cellsArray.forEach((cell, i) => {
-			// we make cells in which our enemy elements will sit to prevent grid item collapsing when hit by laser
+		space.appendChild(enemyContainer);
+		this.enemyBoxWidth = enemyContainer.offsetWidth;
+		this.leftStartPosition = 0;
+		this.currentLeftPosition = 0;
+		this.rightStartPosition = spaceRight - this.enemyBoxWidth;
+		this.currentRightPosition = spaceRight - this.enemyBoxWidth;
+	}
+
+	get totalEnemies() {
+		return this.enemyColumns * this.enemyRows;
+	}
+
+	_populateEnemyContainer() {
+		const enemyCellsArray = [...Array(this.totalEnemies)];
+
+		enemyCellsArray.forEach((_, i) => {
 			const enemyCell = document.createElement("div");
 			enemyCell.classList.add("enemy-cell");
 
-			// create and instantiate each enemy
-			const enemy = document.createElement("div");
-			enemy.classList.add("enemy");
-			import(`../assets/enemy/${this.difficulty}.png`).then(
-				(res) => (enemy.style.backgroundImage = `url(${res.default})`),
-			);
-			this.enemyArray.push(
-				new Enemy(
-					enemy,
-					i,
-					this.grid.columns,
-					this.grid.rows,
-					this.grid.columns * this.grid.rows,
-					this.enemyLaserColor,
-					this.fireRate,
-				),
-			);
+			const enemyDiv = document.createElement("div");
+			enemyDiv.classList.add("enemy");
 
-			enemyCell.appendChild(enemy);
-			this.element.appendChild(enemyCell);
+			const enemy = new Enemy({
+				enemyDiv,
+				id: i,
+				difficulty: this.difficulty,
+				laserSpeed: this.laserSpeed,
+				enemyLaserColor: this.enemyLaserColor,
+			});
+			enemy.init();
+
+			enemyCell.appendChild(enemyDiv);
+			this.enemyBox.appendChild(enemyCell);
 		});
-
-		console.log(this.enemyArray);
-		this.enemyArray.forEach((enemy) => enemy.init());
-
-		space.appendChild(this.element);
-
-		this.spaceEdges = {
-			top: spaceTop,
-			bottom: spaceBottom,
-			left: spaceLeft,
-			right: spaceRight,
-		};
-		this.top = 0;
-		this.leftEdge = 0;
-		this.startLeft = 0;
-		this.rightEdge = this.spaceEdges.right - this.element.offsetWidth;
-		this.startRight = this.spaceEdges.right - this.element.offsetWidth;
-		this.direction = 1;
-
-		this.move();
 	}
 }
 
