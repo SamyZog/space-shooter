@@ -7,20 +7,24 @@ import {
 	space,
 	startButton,
 } from "./elements";
+import { GAME_SETTING_OPTIONS } from "./settings";
 import SpaceShooter from "./SpaceShooter";
 
-let game;
+let difficultyChosen = false;
+let shooterChosen = false;
 
 const START = () => {
-	const gameSettings = {
-		type: "",
-		difficulty: "",
+	// setup initial game settings template
+	const userGameSettings = {
+		difficultySettings: {},
+		shooterSettings: {},
 	};
 
+	// set HUD to be invisible because modal is on screen
 	hud.style.display = "none";
 
-	const setGameSettings = (key, value) => {
-		gameSettings[key] = value;
+	const setGameSettings = (settingsObj, value) => {
+		userGameSettings[settingsObj] = GAME_SETTING_OPTIONS[settingsObj][value];
 	};
 
 	difficultyOptionsButtons.forEach((button) => {
@@ -31,12 +35,14 @@ const START = () => {
 		button.addEventListener("click", handleShooterChoice);
 	});
 
+	// highlight default canvas choice
 	canvasOptionsButtons[3].style.outline = "2px solid var(--light)";
 
 	canvasOptionsButtons.forEach((button) => {
 		button.addEventListener("click", handleCanvasChoice);
 	});
 
+	// disable start game button so the user has to choose options before starting game
 	startButton.disabled = true;
 
 	startButton.addEventListener("click", handleStartButton);
@@ -67,29 +73,29 @@ const START = () => {
 	};
 
 	const setCanvasImage = (id) => {
-		import(`../assets/space/${id}.png`).then((res) => {
+		// change canvas background image when user switches choices
+		import(`../assets/space/${id.toUpperCase()}.png`).then((res) => {
 			space.style.backgroundImage = `url(${res.default})`;
 		});
 	};
 
 	const checkChoices = function () {
-		if (gameSettings.type && gameSettings.difficulty) {
-			startButton.disabled = false;
-		}
+		startButton.disabled = !(difficultyChosen && shooterChosen);
 	};
 
 	function handleDifficultyChoice() {
-		const index = "difficulty";
-		resetOutline(index);
+		difficultyChosen = true;
+		resetOutline("difficulty");
 		setOutline(this);
-		setGameSettings(index, this.id);
+		setGameSettings("difficultySettings", this.id);
 		checkChoices();
 	}
 
 	function handleShooterChoice() {
+		shooterChosen = true;
 		resetOutline("shooter");
 		setOutline(this);
-		setGameSettings("type", this.id);
+		setGameSettings("shooterSettings", this.id);
 		checkChoices();
 	}
 
@@ -101,11 +107,10 @@ const START = () => {
 
 	function handleStartButton() {
 		hud.style.display = "flex";
-		game = new SpaceShooter();
-		game.setup(gameSettings);
+		const game = new SpaceShooter(userGameSettings);
+		game.init();
 		greetingModal.style.display = "none";
 	}
 };
 
-export { space, game };
 export default START;

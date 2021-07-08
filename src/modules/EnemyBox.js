@@ -1,10 +1,10 @@
-import { space } from "./elements";
+import { space, spaceBottom, spaceLeft, spaceRight, spaceTop } from "./elements";
+import Enemy from "./Enemy";
 
 class EnemyBox {
-	constructor(element, difficulty) {
-		this.element = element;
-		this.difficulty = difficulty;
-	}
+	constructor(element, difficulty) {}
+
+	_createElement() {}
 
 	actions() {
 		this.move();
@@ -35,9 +35,7 @@ class EnemyBox {
 		}
 	}
 
-	setDifficulty() {
-		let fireRate;
-
+	setSettings() {
 		switch (this.difficulty) {
 			case "easy":
 				this.grid = {
@@ -45,7 +43,8 @@ class EnemyBox {
 					columns: 6,
 				};
 				this.playbackRate = 1;
-				fireRate = 3000;
+				this.fireRate = 3000;
+				this.enemyLaserColor = "#5F9EA0";
 				break;
 			case "moderate":
 				this.grid = {
@@ -53,7 +52,8 @@ class EnemyBox {
 					columns: 8,
 				};
 				this.playbackRate = 2;
-				fireRate = 2000;
+				this.fireRate = 2000;
+				this.enemyLaserColor = "#FF8C00";
 				break;
 			case "hard":
 				this.grid = {
@@ -61,21 +61,24 @@ class EnemyBox {
 					columns: 10,
 				};
 				this.playbackRate = 3;
-				fireRate = 1000;
+				this.fireRate = 1000;
+				this.enemyLaserColor = "#F0FFFF";
 				break;
 		}
 	}
 
 	init() {
-		this.setDifficulty();
+		this.setSettings();
 
 		this.element.style.gridTemplateColumns = `repeat(${this.grid.columns}, ${
 			this.difficulty === "moderate" ? "5.15" : "4.65"
 		}rem)`;
 		this.element.style.gridTemplateRows = `repeat(${this.grid.rows}, 4.2rem)`;
 
+		const cellsArray = [...Array(this.grid.columns * this.grid.rows)];
+
 		// fill the grid
-		[...Array(this.grid.columns * this.grid.rows)].forEach((cell) => {
+		cellsArray.forEach((cell, i) => {
 			// we make cells in which our enemy elements will sit to prevent grid item collapsing when hit by laser
 			const enemyCell = document.createElement("div");
 			enemyCell.classList.add("enemy-cell");
@@ -86,20 +89,32 @@ class EnemyBox {
 			import(`../assets/enemy/${this.difficulty}.png`).then(
 				(res) => (enemy.style.backgroundImage = `url(${res.default})`),
 			);
+			this.enemyArray.push(
+				new Enemy(
+					enemy,
+					i,
+					this.grid.columns,
+					this.grid.rows,
+					this.grid.columns * this.grid.rows,
+					this.enemyLaserColor,
+					this.fireRate,
+				),
+			);
 
 			enemyCell.appendChild(enemy);
 			this.element.appendChild(enemyCell);
 		});
 
+		console.log(this.enemyArray);
+		this.enemyArray.forEach((enemy) => enemy.init());
+
 		space.appendChild(this.element);
 
-		const boundingRect = space.getBoundingClientRect();
-
 		this.spaceEdges = {
-			top: boundingRect.top,
-			bottom: boundingRect.bottom,
-			left: boundingRect.left,
-			right: boundingRect.right,
+			top: spaceTop,
+			bottom: spaceBottom,
+			left: spaceLeft,
+			right: spaceRight,
 		};
 		this.top = 0;
 		this.leftEdge = 0;

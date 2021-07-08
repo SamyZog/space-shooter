@@ -6,6 +6,11 @@ const cooldownBar = document.querySelector(".bar");
 
 const space = document.querySelector(".space");
 
+const spaceTop = space.getBoundingClientRect().top;
+const spaceBottom = space.getBoundingClientRect().bottom;
+const spaceLeft = space.getBoundingClientRect().left;
+const spaceRight = space.getBoundingClientRect().right;
+
 const greetingModal = document.querySelector(".greeting");
 
 const difficultyOptionsButtons = greetingModal.querySelectorAll(".difficulty-options > button");
@@ -21,6 +26,10 @@ export {
 	cooldownMeter,
 	cooldownBar,
 	space,
+	spaceTop,
+	spaceBottom,
+	spaceLeft,
+	spaceRight,
 	greetingModal,
 	difficultyOptionsButtons,
 	shooterOptionsButtons,

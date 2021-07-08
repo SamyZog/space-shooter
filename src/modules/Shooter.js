@@ -1,16 +1,19 @@
-import { cooldownBar, space } from "./elements";
+import { cooldownBar, space, spaceBottom, spaceLeft, spaceRight } from "./elements";
 
 class Shooter {
-	constructor(element, type, speed, fireRate) {
-		this.element = element;
-		this.type = type;
+	constructor({ laserSpeed, laserCoolDownPeriod, color, speed }) {
+		this.shooter = null;
+		this.laserSpeed = laserSpeed;
+		this.laserCoolDownPeriod = laserCoolDownPeriod;
+		this.color = color;
 		this.speed = speed;
-		this.coolDownPeriod = 2500;
 		this.canShoot = true;
-		this.fireRate = fireRate;
-		this.cool = 0;
-		this.toggledPress = true;
-		this.activeControlKeys = {
+		this.coolDownBarHeightLevel = 0;
+		this.boundaries = null;
+		this.maxFireRateReachTime = null;
+		this.x = null;
+		this.y = null;
+		this.controlKeys = {
 			ArrowLeft: false,
 			ArrowRight: false,
 			ArrowUp: false,
@@ -19,14 +22,84 @@ class Shooter {
 		};
 	}
 
+	// to game engine
 	actions() {
-		this.move();
-		this.checkLimits();
-		this.decrementCoolDown();
-		this.coolDownControl();
+		this._move();
 	}
 
-	checkLimits() {
+	// shooting
+
+	shoot() {
+		if (this.coolDownBarHeightLevel > 100) {
+			this.canShoot = false;
+			this.maxFireRateReachTime = Date.now();
+			return;
+		}
+
+		this._incrementCoolDownBarHeightLevel();
+		this._setLiveShooterPosition();
+		this._createLaser();
+	}
+
+	_incrementCoolDownBarHeightLevel = () => {
+		cooldownBar.style.top = `-${(this.coolDownBarHeightLevel += 25)}%`;
+	};
+
+	_setLiveShooterPosition() {
+		// try with this.x and this.y instead
+		this.shooterX = this.shooter.getBoundingClientRect().left;
+		this.shooterY = this.shooter.getBoundingClientRect().top;
+		this.shooterWidth = this.shooter.offsetWidth;
+	}
+
+	_createLaser() {
+		const laser = document.createElement("div");
+		laser.classList.add("laser");
+		space.appendChild(laser);
+
+		laser.style.backgroundColor = `var(--${this.color})`;
+		laser.style.top = `${this.shooterY - laser.offsetHeight}px`;
+		laser.style.left = `${this.shooterX + this.shooterWidth / 2}px`;
+
+		const laserFireAnimation = laser.animate([{ transform: `translateY(-${spaceBottom}px)` }], {
+			duration: this.laserSpeed,
+			fill: "forwards",
+		});
+
+		laserFireAnimation.finished.then((res) => {
+			laser.remove();
+		});
+	}
+
+	// movement
+
+	_move() {
+		if (this.controlKeys.ArrowUp) {
+			this.x = this.x;
+			this.y -= this.speed;
+		}
+
+		if (this.controlKeys.ArrowDown) {
+			this.x = this.x;
+			this.y += this.speed;
+		}
+
+		if (this.controlKeys.ArrowLeft) {
+			this.x -= this.speed;
+			this.y = this.y;
+		}
+
+		if (this.controlKeys.ArrowRight) {
+			this.x += this.speed;
+			this.y = this.y;
+		}
+
+		this.shooter.style.transform = `translate(${this.x}px, ${this.y}px)`;
+
+		this._checkLimits();
+	}
+
+	_checkLimits() {
 		const bounds = this.boundaries;
 
 		if (this.x < bounds.leftEdge) {
@@ -42,147 +115,80 @@ class Shooter {
 			this.y = bounds.bottomEdge;
 		}
 
-		this.element.style.transform = `translate(${this.x}px, ${this.y}px`;
+		this.shooter.style.transform = `translate(${this.x}px, ${this.y}px`;
 	}
 
-	move() {
-		if (this.activeControlKeys.ArrowUp) {
-			this.element.style.transform = `translate(${this.x}px, ${(this.y -= this.speed)}px)`;
-		}
-
-		if (this.activeControlKeys.ArrowDown) {
-			this.element.style.transform = `translate(${this.x}px, ${(this.y += this.speed)}px)`;
-		}
-
-		if (this.activeControlKeys.ArrowLeft) {
-			this.element.style.transform = `translate(${(this.x -= this.speed)}px, ${this.y}px)`;
-		}
-
-		if (this.activeControlKeys.ArrowRight) {
-			this.element.style.transform = `translate(${(this.x += this.speed)}px, ${this.y}px)`;
-		}
-	}
-
-	coolDownControl() {
-		if (this.canShoot) {
-			return;
-		}
-		if (Date.now() - this.maxFireRateTime > this.coolDownPeriod) {
-			this.cool = 1;
-			this.canShoot = true;
-		}
-	}
-
-	decrementCoolDown() {
-		if (this.cool < 0) {
-			this.cool = 0;
-			return;
-		}
-		if (!this.canShoot) {
-			return;
-		}
-		this.cool -= 1;
-		cooldownBar.style.top = `-${this.cool}%`;
-	}
-
-	fire() {
-		if (this.cool > 100) {
-			this.canShoot = false;
-			this.maxFireRateTime = Date.now();
-			return;
-		}
-
-		// load laser sounds
-		import("../assets/sound-effects/sfx_laser2.ogg").then((res) => {
-			const audioEl = new Audio(res.default);
-			audioEl.play();
-		});
-
-		cooldownBar.style.top = `-${(this.cool += 25)}%`;
-
-		const laser = document.createElement("div");
-
-		const fighterX = this.element.getBoundingClientRect().left;
-		const fighterY = this.element.getBoundingClientRect().top;
-		const fighterWidth = this.element.offsetWidth;
-
-		laser.classList.add("laser");
-		space.appendChild(laser);
-
-		laser.style.backgroundColor = `var(--${this.type})`;
-		laser.style.top = `${fighterY - laser.offsetHeight}px`;
-		laser.style.left = `${fighterX + fighterWidth / 2}px`;
-
-		this.laserFireAnimation = laser.animate([{ top: `-${laser.offsetHeight}px` }], {
-			duration: this.fireRate,
-			fill: "forwards",
-			easing: "linear",
-		});
-
-		this.laserFireAnimation.finished.then((res) => {
-			// remove lasers when their animation finish
-			laser.remove();
-		});
-	}
+	// initialization
 
 	init() {
-		// set the image of the chosen shooter
-		import(`../assets/fighter/${this.type}.png`).then((res) => {
-			this.element.style.backgroundImage = `url(${res.default})`;
+		const shooterDiv = document.createElement("div");
+		this.shooter = shooterDiv;
+		shooterDiv.classList.add("shooter");
+		space.appendChild(shooterDiv);
+		this._setImage();
+		this._setInitialPosition();
+		this._setMovementBoundaries();
+		this._setActionHandlers();
+	}
+
+	_setImage() {
+		import(`../assets/fighter/${this.color}.png`).then((res) => {
+			this.shooter.style.backgroundImage = `url(${res.default})`;
 		});
-		// movement logic initiation
+	}
+
+	_setInitialPosition() {
+		this.x = spaceRight / 2 - this.shooter.offsetWidth / 2;
+		this.y = spaceBottom - this.shooter.offsetHeight - 20;
+		this.shooter.style.transform = `translate(${this.x}px, ${this.y}px)`;
+	}
+
+	_setMovementBoundaries() {
+		this.boundaries = {
+			topEdge: spaceBottom * 0.75,
+			bottomEdge: spaceBottom - this.shooter.offsetHeight,
+			leftEdge: spaceLeft,
+			rightEdge: spaceRight - this.shooter.offsetWidth,
+		};
+	}
+
+	_setActionHandlers() {
 		document.body.addEventListener("keydown", (e) => {
 			if (e.key === "ArrowUp") {
-				this.activeControlKeys[e.key] = true;
+				this.controlKeys[e.key] = true;
 			}
 			if (e.key === "ArrowDown") {
-				this.activeControlKeys[e.key] = true;
+				this.controlKeys[e.key] = true;
 			}
 			if (e.key === "ArrowLeft") {
-				this.activeControlKeys[e.key] = true;
+				this.controlKeys[e.key] = true;
 			}
 			if (e.key === "ArrowRight") {
-				this.activeControlKeys[e.key] = true;
+				this.controlKeys[e.key] = true;
 			}
 		});
+
 		document.body.addEventListener("keyup", (e) => {
 			if (e.key === "ArrowLeft") {
-				this.activeControlKeys[e.key] = false;
+				this.controlKeys[e.key] = false;
 			}
 			if (e.key === "ArrowRight") {
-				this.activeControlKeys[e.key] = false;
+				this.controlKeys[e.key] = false;
 			}
 			if (e.key === "ArrowUp") {
-				this.activeControlKeys[e.key] = false;
+				this.controlKeys[e.key] = false;
 			}
 			if (e.key === "ArrowDown") {
-				this.activeControlKeys[e.key] = false;
+				this.controlKeys[e.key] = false;
 			}
 			if (e.key === " ") {
 				if (!this.canShoot) {
 					return;
 				}
-				this.fire();
-				this.activeControlKeys[e.key] = false;
+				this.shoot();
+				this.controlKeys[e.key] = false;
 			}
 		});
-
-		// append shooter element to canvas
-		space.appendChild(this.element);
-
-		// set movement boundaries
-		const spaceBoundaries = space.getBoundingClientRect();
-		this.x = spaceBoundaries.right / 2 - this.element.offsetWidth / 2;
-		this.y = spaceBoundaries.bottom - this.element.offsetHeight - 20;
-		this.boundaries = {
-			topEdge: spaceBoundaries.bottom * 0.75,
-			bottomEdge: spaceBoundaries.bottom - this.element.offsetHeight,
-			leftEdge: spaceBoundaries.left,
-			rightEdge: spaceBoundaries.right - this.element.offsetWidth,
-		};
-
-		// initial shooter position on first appearance
-		this.element.style.transform = `translate(${this.x}px, ${this.y}px)`;
 	}
 }
 
