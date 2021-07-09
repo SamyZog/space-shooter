@@ -22,6 +22,8 @@ class EnemyBox {
 		this.currentRightPosition = null;
 	}
 
+	// to game engine
+
 	actions() {
 		this._move();
 	}
@@ -75,9 +77,10 @@ class EnemyBox {
 		enemyContainer.style.gridTemplateColumns = `repeat(${this.enemyColumns}, ${this.width}px)`;
 		enemyContainer.style.gridTemplateRows = `repeat(${this.enemyRows}, ${this.height}px)`;
 
+		space.appendChild(enemyContainer);
+
 		this._populateEnemyContainer();
 
-		space.appendChild(enemyContainer);
 		this.enemyBoxWidth = enemyContainer.offsetWidth;
 		this.leftStartPosition = 0;
 		this.currentLeftPosition = 0;
@@ -90,26 +93,27 @@ class EnemyBox {
 	}
 
 	_populateEnemyContainer() {
-		const enemyCellsArray = [...Array(this.totalEnemies)];
-
-		enemyCellsArray.forEach((_, i) => {
+		const enemyArray = [...Array(this.totalEnemies)].map((_, i, arr) => {
 			const enemyCell = document.createElement("div");
 			enemyCell.classList.add("enemy-cell");
+			this.enemyBox.appendChild(enemyCell);
+			return enemyCell;
+		});
 
+		enemyArray.forEach((enemyCell, i, arr) => {
 			const enemyDiv = document.createElement("div");
 			enemyDiv.classList.add("enemy");
+			enemyCell.appendChild(enemyDiv);
 
-			const enemy = new Enemy({
+			new Enemy({
 				enemyDiv,
 				id: i,
 				difficulty: this.difficulty,
 				laserSpeed: this.laserSpeed,
 				enemyLaserColor: this.enemyLaserColor,
-			});
-			enemy.init();
-
-			enemyCell.appendChild(enemyDiv);
-			this.enemyBox.appendChild(enemyCell);
+				columns: this.enemyColumns,
+				rows: this.enemyRows,
+			}).init();
 		});
 	}
 }

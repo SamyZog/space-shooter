@@ -25,6 +25,7 @@ class Shooter {
 	}
 
 	// to game engine
+
 	actions() {
 		this._move();
 	}
@@ -48,9 +49,8 @@ class Shooter {
 	};
 
 	_setLiveShooterPosition() {
-		this.shooterX = this.shooter.getBoundingClientRect().left;
 		this.shooterY = this.shooter.getBoundingClientRect().top;
-		this.shooterWidth = this.shooter.offsetWidth;
+		this.shooterX = this.shooter.getBoundingClientRect().left;
 	}
 
 	_createLaser() {
@@ -126,6 +126,8 @@ class Shooter {
 		this.shooter = shooterDiv;
 		shooterDiv.classList.add("shooter");
 		space.appendChild(shooterDiv);
+		this.shooterWidth = shooterDiv.offsetWidth;
+
 		this._setImage();
 		this._setInitialPosition();
 		this._setMovementBoundaries();
