@@ -8,42 +8,82 @@
 	</head>
 	<body>
 		<div id="root">
-			<div class="space">
-				<div class="greeting">
-					<div class="settings">
-						<h1>SPACE SHOOTER</h1>
-						<div class="choose-difficulty">
-							<h2>CHOOSE DIFFICULTY</h2>
-							<div class="difficulty-options">
-								<button id="EASY">EASY</button>
-								<button id="MODERATE">MODERATE</button>
-								<button id="HARD">HARD</button>
-							</div>
+			<div class="hud">
+				<div class="hud__cooldown-meter">
+					<div class="hud__bar"></div>
+				</div>
+			</div>
+			<div class="space"></div>
+			<div class="settings">
+				<div class="settings__options">
+					<h1 class="game-title">SPACE SHOOTER</h1>
+					<div class="settings__difficulty">
+						<h2 class="settings__difficulty-title">CHOOSE DIFFICULTY</h2>
+						<div class="settings__difficulty-options">
+							<button id="EASY">EASY</button>
+							<button id="MODERATE">MODERATE</button>
+							<button id="HARD">HARD</button>
 						</div>
-						<div class="choose-fighters">
-							<h2>CHOOSE YOUR FIGHTER</h2>
-							<div class="shooter-options">
+					</div>
+					<div class="settings__fighters">
+						<h2 class="settings__fighters-title">CHOOSE YOUR FIGHTER</h2>
+						<div class="settings__fighter-options">
+							<div class="settings__red-fury" data-color="red">
+								<h3 class="settings__red-fury-title">RED FURY</h3>
 								<button id="RED"></button>
-								<button id="BLUE"></button>
-								<button id="GREEN"></button>
+								<div class="settings__rf-specs">
+									<img class="speed-img" src="./assets/hud/speedometer.svg" alt="" />
+									<div class="speed-meter">
+										<div class="rfs speed-bar"></div>
+									</div>
+									<img class="laser-img" src="./assets/hud/laser.svg" alt="" />
+									<div class="laser-meter">
+										<div class="rfl laser-bar"></div>
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="choose-canvas">
-							<h2>CHOOSE CANVAS COLOR</h2>
-							<div class="canvas-options">
-								<button id="purple"></button>
-								<button id="darkpurple"></button>
-								<button id="blue"></button>
-								<button id="black"></button>
+							<div class="settings__blue-diamond" data-color="blue">
+								<h3 class="settings__blue-diamond-title">BLUE DIAMOND</h3>
+								<button id="BLUE"></button>
+								<div class="settings__bd-specs">
+									<img class="speed-img" src="./assets/hud/speedometer.svg" alt="" />
+									<div class="speed-meter">
+										<div class="bds speed-bar"></div>
+									</div>
+									<img class="laser-img" src="./assets/hud/laser.svg" alt="" />
+									<div class="laser-meter">
+										<div class="bdl laser-bar"></div>
+									</div>
+								</div>
+							</div>
+							<div class="settings__green-arrow" data-color="green">
+								<h3 class="settings__green-arrow-title">GREEN ARROW</h3>
+								<button id="GREEN"></button>
+								<div class="settings__ga-specs">
+									<img class="speed-img" src="./assets/hud/speedometer.svg" alt="" />
+									<div class="speed-meter">
+										<div class="gas speed-bar"></div>
+									</div>
+									<img class="laser-img" src="./assets/hud/laser.svg" alt="" />
+									<div class="laser-meter">
+										<div class="gal laser-bar"></div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-					<button class="start">START!</button>
-				</div>
-			</div>
-			<div class="hud">
-				<div class="cooldown-meter">
-					<div class="bar"></div>
+					<div class="settings__canvas">
+						<h2 class="settings__canvas-title">CHOOSE CANVAS COLOR</h2>
+						<div class="settings__canvas-options">
+							<button id="purple"></button>
+							<button id="darkpurple"></button>
+							<button id="blue"></button>
+							<button id="black"></button>
+						</div>
+					</div>
+					<div class="start">
+						<button class="start__button">START!</button>
+					</div>
 				</div>
 			</div>
 		</div>

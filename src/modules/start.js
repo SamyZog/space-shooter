@@ -1,9 +1,9 @@
 import {
 	canvasOptionsButtons,
 	difficultyOptionsButtons,
-	greetingModal,
+	fighterOptionsButtons,
 	hud,
-	shooterOptionsButtons,
+	settingsModal,
 	space,
 	startButton,
 } from "./elements";
@@ -12,6 +12,7 @@ import SpaceShooter from "./SpaceShooter";
 
 let difficultyChosen = false;
 let shooterChosen = false;
+let canvasChosen = false;
 
 const START = () => {
 	// setup initial game settings template
@@ -19,9 +20,6 @@ const START = () => {
 		difficultySettings: {},
 		shooterSettings: {},
 	};
-
-	// set HUD to be invisible because modal is on screen
-	hud.style.display = "none";
 
 	const setGameSettings = (settingsObj, value) => {
 		userGameSettings[settingsObj] = GAME_SETTING_OPTIONS[settingsObj][value];
@@ -31,45 +29,53 @@ const START = () => {
 		button.addEventListener("click", handleDifficultyChoice);
 	});
 
-	shooterOptionsButtons.forEach((button) => {
-		button.addEventListener("click", handleShooterChoice);
+	fighterOptionsButtons.forEach((button) => {
+		button.addEventListener("click", handleFighterChoice);
 	});
-
-	// highlight default canvas choice
-	canvasOptionsButtons[3].style.outline = "2px solid var(--light)";
 
 	canvasOptionsButtons.forEach((button) => {
 		button.addEventListener("click", handleCanvasChoice);
 	});
 
-	// disable start game button so the user has to choose options before starting game
 	startButton.disabled = true;
 
 	startButton.addEventListener("click", handleStartButton);
 
-	const resetOutline = (payload) => {
-		const clearOutline = (el) => (el.style.outline = "none");
+	const resetStyle = (payload) => {
 		switch (payload) {
 			case "difficulty":
 				difficultyOptionsButtons.forEach((button) => {
-					clearOutline(button);
+					button.style.color = `var(--light)`;
 				});
 				break;
-			case "shooter":
-				shooterOptionsButtons.forEach((button) => {
-					clearOutline(button);
+			case "fighter":
+				fighterOptionsButtons.forEach((button) => {
+					button.style.borderColor = `var(--tint1)`;
 				});
 				break;
 			case "canvas":
 				canvasOptionsButtons.forEach((button) => {
-					clearOutline(button);
+					button.style.borderColor = "var(--tint1)";
 				});
 				break;
 		}
 	};
 
-	const setOutline = (el) => {
-		el.style.outline = "2px solid var(--light)";
+	const setStyle = (element, payload) => {
+		switch (payload) {
+			case "difficulty":
+				element.style.color = `var(--tint2)`;
+				break;
+			case "fighter":
+				element.style.borderColor = `var(--${element.dataset.color})`;
+				break;
+			case "canvas":
+				element.style.borderColor = "var(--tint2)";
+				break;
+
+			default:
+				break;
+		}
 	};
 
 	const setCanvasImage = (id) => {
@@ -80,39 +86,44 @@ const START = () => {
 	};
 
 	const checkChoices = function () {
-		startButton.disabled = !(difficultyChosen && shooterChosen);
-		if (!startButton.disabled) {
+		if (difficultyChosen && shooterChosen && canvasChosen) {
+			startButton.disabled = false;
 			startButton.focus();
 		}
 	};
 
 	function handleDifficultyChoice() {
+		const payload = "difficulty";
 		difficultyChosen = true;
-		resetOutline("difficulty");
-		setOutline(this);
+		resetStyle(payload);
+		setStyle(this, payload);
 		setGameSettings("difficultySettings", this.id);
 		checkChoices();
 	}
 
-	function handleShooterChoice() {
+	function handleFighterChoice() {
+		const payload = "fighter";
 		shooterChosen = true;
-		resetOutline("shooter");
-		setOutline(this);
-		setGameSettings("shooterSettings", this.id);
+		resetStyle(payload);
+		setStyle(this, payload);
+		setGameSettings("shooterSettings", this.dataset.color.toUpperCase());
 		checkChoices();
 	}
 
 	function handleCanvasChoice() {
-		resetOutline("canvas");
-		setOutline(this);
+		const payload = "canvas";
+		canvasChosen = true;
 		setCanvasImage(this.id);
+		resetStyle(payload);
+		setStyle(this, payload);
+		checkChoices();
 	}
 
 	function handleStartButton() {
 		hud.style.display = "flex";
 		const game = new SpaceShooter(userGameSettings);
 		game.init();
-		greetingModal.style.display = "none";
+		settingsModal.style.display = "none";
 	}
 };
 

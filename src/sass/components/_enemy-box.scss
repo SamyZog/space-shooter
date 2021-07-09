@@ -1,7 +1,7 @@
 .enemy-box {
 	display: inline-grid;
-	gap: var(--g);
 	position: absolute;
+	gap: var(--enemy-grid-gap);
 
 	.enemy {
 		display: inline-block;

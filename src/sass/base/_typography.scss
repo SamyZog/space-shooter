@@ -6,3 +6,22 @@ body {
 button {
 	font-family: inherit;
 }
+
+.settings {
+	.game-title {
+		font-size: 5rem;
+		color: var(--tint2);
+	}
+
+	&__red-fury-title,
+	&__blue-diamond-title,
+	&__green-arrow-title {
+		color: var(--tint2);
+	}
+
+	&__difficulty-title,
+	&__fighters-title,
+	&__canvas-title {
+		color: var(--light);
+	}
+}

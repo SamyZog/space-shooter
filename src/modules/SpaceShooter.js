@@ -34,7 +34,7 @@ class SpaceShooter {
 
 		this.moveCanvas = () => {
 			space.animate([{ backgroundPositionY: 0 }, { backgroundPositionY: "256px" }], {
-				duration: 1500,
+				duration: 1000,
 				iterations: Infinity,
 			});
 		};

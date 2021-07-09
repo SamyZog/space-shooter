@@ -2,7 +2,7 @@ const hud = document.querySelector(".hud");
 
 const cooldownMeter = document.querySelector(".cooldown-meter");
 
-const cooldownBar = document.querySelector(".bar");
+const cooldownBar = document.querySelector(".hud__bar");
 
 const space = document.querySelector(".space");
 
@@ -11,28 +11,28 @@ const spaceBottom = space.getBoundingClientRect().bottom;
 const spaceLeft = space.getBoundingClientRect().left;
 const spaceRight = space.getBoundingClientRect().right;
 
-const greetingModal = document.querySelector(".greeting");
+const settingsModal = document.querySelector(".settings");
 
-const difficultyOptionsButtons = greetingModal.querySelectorAll(".difficulty-options > button");
+const difficultyOptionsButtons = settingsModal.querySelectorAll(".settings__difficulty-options > button");
 
-const shooterOptionsButtons = greetingModal.querySelectorAll(".shooter-options > button");
+const fighterOptionsButtons = settingsModal.querySelectorAll(".settings__fighter-options > div");
 
-const canvasOptionsButtons = greetingModal.querySelectorAll(".canvas-options > button");
+const canvasOptionsButtons = settingsModal.querySelectorAll(".settings__canvas-options > button");
 
-const startButton = document.querySelector(".start");
+const startButton = document.querySelector(".start__button");
 
 export {
 	hud,
-	cooldownMeter,
-	cooldownBar,
 	space,
 	spaceTop,
 	spaceBottom,
 	spaceLeft,
 	spaceRight,
-	greetingModal,
+	cooldownMeter,
+	cooldownBar,
+	settingsModal,
 	difficultyOptionsButtons,
-	shooterOptionsButtons,
+	fighterOptionsButtons,
 	canvasOptionsButtons,
 	startButton,
 };

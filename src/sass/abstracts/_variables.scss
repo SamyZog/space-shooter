@@ -1,15 +1,24 @@
 :root {
-	--red: #f0134d;
-	--green: #a8ff3e;
-	--blue: #12cad6;
+	--hud-padding: 3rem;
+	--enemy-grid-gap: 2rem;
 
-	--p: 2rem;
-	--g: 2rem;
+	--difficulty-btn-h: 3rem;
 
-	--f-h: 2rem;
+	--gap: 3rem;
+	--gap-s: 0.5rem;
+	--pad: 2rem;
+	--pad-s: 1rem;
+
+	--br: 1rem;
+
+	--start-button-height: 5rem;
 
 	--laser-h: 1rem;
 	--laser-w: 0.25rem;
 
-	--hud-w: 5rem;
+	--enemy-laser-h: 1.25rem;
+	--enemy-laser-w: 0.35rem;
+
+	--hud-h: 5rem;
+	--space-h: calc(100vh - var(--hud-h));
 }

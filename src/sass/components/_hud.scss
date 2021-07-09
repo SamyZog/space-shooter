@@ -1,29 +1,29 @@
 .hud {
+	height: 0;
 	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	padding: var(--p) 0;
-	flex-basis: var(--hud-w);
-	background-color: var(--tint1);
+	background-color: var(--tint2);
 	opacity: 1;
+	padding: 0 var(--hud-padding);
+	transition-duration: 200ms;
 
-	.cooldown-meter {
+	&__cooldown-meter {
 		position: relative;
 		background-image: linear-gradient(to bottom, red, yellow);
-		height: 50px;
-		width: 40%;
+		height: 50%;
+		width: 10px;
 		border-radius: 10px;
 		overflow: hidden;
+	}
 
-		.bar {
-			position: absolute;
-			height: 100%;
-			width: 100%;
-			top: 0%;
-			background-color: var(--dark);
-			transition-duration: 100ms;
-			transition-property: top;
-		}
+	&__bar {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0%;
+		background-color: var(--dark);
+		transition-duration: 100ms;
+		transition-property: top;
 	}
 }
