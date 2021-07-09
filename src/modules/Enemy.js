@@ -12,10 +12,12 @@ class Enemy {
 		this.enemyX = null;
 		this.enemyY = null;
 		this.enemyWidth = null;
+		this.interval = Math.ceil(Math.random() * 3);
 	}
 
 	start() {
-		if (this._checkShootingPossibility()) {
+		const liveEnemyCellNodeList = document.querySelectorAll(".enemy-cell");
+		if (this._isPresent(liveEnemyCellNodeList) && this._hasClearShot(liveEnemyCellNodeList)) {
 			this.shoot();
 		}
 	}
@@ -52,13 +54,6 @@ class Enemy {
 		space.appendChild(enemyLaser);
 	}
 
-	_checkShootingPossibility() {
-		const liveEnemyCellNodeList = document.querySelectorAll(".enemy-cell");
-		if (this._isPresent(liveEnemyCellNodeList) && this._hasClearShot(liveEnemyCellNodeList)) {
-			return true;
-		}
-	}
-
 	_hasClearShot(list) {
 		for (let i = this.id + this.columns; i < list.length; i += this.columns) {
 			if (list[i].hasChildNodes()) {
@@ -77,15 +72,19 @@ class Enemy {
 	init() {
 		this.enemyWidth = this.enemyDiv.offsetWidth;
 		this._setImage();
-		setInterval(() => {
-			this.start();
-		}, 1000);
 	}
 
 	_setImage() {
-		import(`../assets/enemy/${this.difficulty}.png`).then(
-			(res) => (this.enemyDiv.style.backgroundImage = `url(${res.default})`),
-		);
+		let interval = Math.ceil(Math.random() * 3000);
+		import(`../assets/enemy/${this.difficulty}.png`).then((res) => {
+			this.enemyDiv.style.backgroundImage = `url(${res.default})`;
+			const _randomizeShooting = () => {
+				this.start();
+				interval = Math.ceil(Math.random() * 3000);
+				setTimeout(_randomizeShooting, interval);
+			};
+			setTimeout(_randomizeShooting, interval);
+		});
 	}
 }
 

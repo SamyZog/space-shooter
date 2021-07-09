@@ -105,7 +105,7 @@ class EnemyBox {
 			enemyDiv.classList.add("enemy");
 			enemyCell.appendChild(enemyDiv);
 
-			new Enemy({
+			const enemy = new Enemy({
 				enemyDiv,
 				id: i,
 				difficulty: this.difficulty,
@@ -113,7 +113,8 @@ class EnemyBox {
 				enemyLaserColor: this.enemyLaserColor,
 				columns: this.enemyColumns,
 				rows: this.enemyRows,
-			}).init();
+			});
+			enemy.init();
 		});
 	}
 }

@@ -4,7 +4,7 @@ const GAME_SETTING_OPTIONS = {
 	difficultySettings: {
 		EASY: {
 			difficulty: "easy",
-			enemySpeed: 1,
+			enemySpeed: 0.5,
 			laserSpeed: 2000,
 			enemyColumns: 8,
 			enemyRows: 3,
@@ -14,7 +14,7 @@ const GAME_SETTING_OPTIONS = {
 		},
 		MODERATE: {
 			difficulty: "moderate",
-			enemySpeed: 2,
+			enemySpeed: 1,
 			laserSpeed: 1500,
 			enemyColumns: 10,
 			enemyRows: 4,
@@ -25,7 +25,7 @@ const GAME_SETTING_OPTIONS = {
 		},
 		HARD: {
 			difficulty: "hard",
-			enemySpeed: 3,
+			enemySpeed: 1.5,
 			laserSpeed: 1000,
 			enemyColumns: 12,
 			enemyRows: 5,
