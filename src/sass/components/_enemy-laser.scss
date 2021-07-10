@@ -4,4 +4,5 @@
 	height: var(--enemy-laser-h);
 	transform: translate(-50%);
 	background-color: red;
+	z-index: -10;
 }

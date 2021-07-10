@@ -3,6 +3,7 @@ import {
 	difficultyOptionsButtons,
 	fighterOptionsButtons,
 	hud,
+	restartGameBtn,
 	settingsModal,
 	space,
 	startButton,
@@ -13,6 +14,8 @@ import SpaceShooter from "./SpaceShooter";
 let difficultyChosen = false;
 let shooterChosen = false;
 let canvasChosen = false;
+
+let game;
 
 const START = () => {
 	// setup initial game settings template
@@ -40,6 +43,10 @@ const START = () => {
 	startButton.disabled = true;
 
 	startButton.addEventListener("click", handleStartButton);
+
+	restartGameBtn.addEventListener("click", function () {
+		location.reload();
+	});
 
 	const resetStyle = (payload) => {
 		switch (payload) {
@@ -120,11 +127,13 @@ const START = () => {
 	}
 
 	function handleStartButton() {
-		hud.style.display = "flex";
-		const game = new SpaceShooter(userGameSettings);
-		game.init();
+		game = new SpaceShooter(userGameSettings);
 		settingsModal.style.display = "none";
+		hud.style.height = "5vh";
+		space.style.height = "95vh";
+		game.init();
 	}
 };
 
+export { game };
 export default START;

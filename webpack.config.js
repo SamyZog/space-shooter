@@ -77,7 +77,7 @@ module.exports = (env, argv) => {
 					generator: { filename: "assets/images/[contenthash][ext][query]" },
 				},
 				{
-					test: /\.ogg$/,
+					test: /\.(ogg|wav)$/,
 					type: "asset/resource",
 					generator: { filename: "assets/audio/[contenthash][ext][query]" },
 				},

@@ -7,10 +7,11 @@ const GAME_SETTING_OPTIONS = {
 			enemySpeed: 0.5,
 			laserSpeed: 2000,
 			enemyColumns: 8,
-			enemyRows: 3,
+			enemyRows: 4,
 			enemyLaserColor: "#5F9EA0",
 			height: 42,
 			width: 46.5,
+			lives: 3,
 		},
 		MODERATE: {
 			difficulty: "moderate",
@@ -22,6 +23,7 @@ const GAME_SETTING_OPTIONS = {
 			height: 42,
 			width: 46.5,
 			width: 51.5,
+			lives: 2,
 		},
 		HARD: {
 			difficulty: "hard",
@@ -32,6 +34,7 @@ const GAME_SETTING_OPTIONS = {
 			enemyLaserColor: "#F0FFFF",
 			height: 42,
 			width: 46.5,
+			lives: 1,
 		},
 	},
 	shooterSettings: {

@@ -3,16 +3,24 @@ import { space, spaceBottom } from "./elements";
 class Enemy {
 	constructor({ enemyDiv, id, difficulty, laserSpeed, enemyLaserColor, columns }) {
 		this.enemyDiv = enemyDiv;
+		this.isDead = false;
 		this.id = id;
 		this.difficulty = difficulty;
 		this.laserSpeed = laserSpeed;
 		this.enemyLaserColor = enemyLaserColor;
 		this.columns = columns;
-		this.canShoot = false;
+		this.canShoot = true;
 		this.enemyX = null;
 		this.enemyY = null;
 		this.enemyWidth = null;
 		this.interval = Math.ceil(Math.random() * 3);
+		this.randomizeShooting = () => {
+			if (this.canShoot) {
+				this.start();
+				this.interval = Math.ceil(Math.random() * 3000);
+				setTimeout(this.randomizeShooting, this.interval);
+			}
+		};
 	}
 
 	start() {
@@ -38,20 +46,29 @@ class Enemy {
 		const enemyLaser = document.createElement("div");
 		enemyLaser.classList.add("enemy-laser");
 
-		enemyLaser.style.backgroundColor = this.enemyLaserColor;
-		enemyLaser.style.top = `${this.enemyY + this.enemyDiv.offsetHeight}px`;
-		enemyLaser.style.left = `${this.enemyX + this.enemyWidth / 2}px`;
+		import("../assets/sound-effects/sfx_laser2.ogg")
+			.then((res) => new Audio(res.default))
+			.then((audio) => {
+				enemyLaser.style.backgroundColor = this.enemyLaserColor;
+				enemyLaser.style.top = `${this.enemyY + this.enemyDiv.offsetHeight}px`;
+				enemyLaser.style.left = `${this.enemyX + this.enemyWidth / 2}px`;
 
-		const enemylaserFireAnimation = enemyLaser.animate([{ transform: `translateY(${spaceBottom}px)` }], {
-			duration: this.laserSpeed,
-			fill: "forwards",
-		});
+				const enemylaserFireAnimation = enemyLaser.animate([{ transform: `translateY(${spaceBottom}px)` }], {
+					duration: this.laserSpeed,
+					fill: "forwards",
+				});
 
-		enemylaserFireAnimation.finished.then((res) => {
-			enemyLaser.remove();
-		});
+				enemylaserFireAnimation.finished.then((res) => {
+					enemyLaser.remove();
+				});
+				audio.play();
 
-		space.appendChild(enemyLaser);
+				space.appendChild(enemyLaser);
+
+				audio.onended = function () {
+					audio.remove();
+				};
+			});
 	}
 
 	_hasClearShot(list) {
@@ -78,12 +95,7 @@ class Enemy {
 		let interval = Math.ceil(Math.random() * 3000);
 		import(`../assets/enemy/${this.difficulty}.png`).then((res) => {
 			this.enemyDiv.style.backgroundImage = `url(${res.default})`;
-			const _randomizeShooting = () => {
-				this.start();
-				interval = Math.ceil(Math.random() * 3000);
-				setTimeout(_randomizeShooting, interval);
-			};
-			setTimeout(_randomizeShooting, interval);
+			this.timeOut = setTimeout(this.randomizeShooting, interval);
 		});
 	}
 }

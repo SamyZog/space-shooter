@@ -1,10 +1,13 @@
-import { cooldownBar, space, spaceBottom, spaceLeft, spaceRight } from "./elements";
+import { cooldownBar, hudShooterLives, space, spaceBottom } from "./elements";
+import { game } from "./start";
 
 class Shooter {
 	constructor({ laserSpeed, laserCoolDownPeriod, color, speed }) {
+		this.audio = null;
 		this.shooter = null;
 		this.laserSpeed = laserSpeed;
 		this.laserCoolDownPeriod = laserCoolDownPeriod;
+		this.lives = game.difficultySettings.lives;
 		this.color = color;
 		this.speed = speed;
 		this.canShoot = true;
@@ -13,6 +16,7 @@ class Shooter {
 		this.decrementLevel = 1;
 		this.boundaries = null;
 		this.maxFireRateReachTime = null;
+		this.isDead = false;
 		this.x = null;
 		this.y = null;
 		this.controlKeys = {
@@ -22,6 +26,23 @@ class Shooter {
 			ArrowDown: false,
 			[" "]: false,
 		};
+	}
+
+	showToolTip(msg) {
+		this.toolTipDiv.innerText = msg;
+		const toolTipAnimation = this.toolTipDiv.animate([{ top: "-50%", right: "-50%", opacity: 1 }], {
+			duration: 500,
+		});
+
+		toolTipAnimation.finished.then((_) => {
+			this.toolTipDiv.innerText = "";
+			this.toolTipDiv.style.opacity = "0";
+		});
+	}
+
+	set currentPosition(coords) {
+		const [x, y] = coords;
+		this.shooter.style.transform = `translate(${x}px, ${y}px`;
 	}
 
 	// to game engine
@@ -45,7 +66,9 @@ class Shooter {
 	}
 
 	_incrementCoolDownBarHeightLevel = () => {
-		cooldownBar.style.top = `-${(this.coolDownBarHeightLevel += this.incrementLevel)}%`;
+		if (this.canShoot) {
+			cooldownBar.style.top = `-${(this.coolDownBarHeightLevel += this.incrementLevel)}%`;
+		}
 	};
 
 	_setLiveShooterPosition() {
@@ -56,20 +79,30 @@ class Shooter {
 	_createLaser() {
 		const laser = document.createElement("div");
 		laser.classList.add("laser");
-		space.appendChild(laser);
 
-		laser.style.backgroundColor = `var(--${this.color})`;
-		laser.style.top = `${this.shooterY - laser.offsetHeight}px`;
-		laser.style.left = `${this.shooterX + this.shooterWidth / 2}px`;
+		import("../assets/sound-effects/laser1.wav")
+			.then((res) => new Audio(res.default))
+			.then((audio) => {
+				laser.style.backgroundColor = `var(--${this.color})`;
+				laser.style.top = `${this.shooterY - laser.offsetHeight}px`;
+				laser.style.left = `${this.shooterX + this.shooterWidth / 2}px`;
 
-		const laserFireAnimation = laser.animate([{ transform: `translateY(-${spaceBottom}px)` }], {
-			duration: this.laserSpeed,
-			fill: "forwards",
-		});
+				const laserFireAnimation = laser.animate([{ transform: `translateY(-${spaceBottom}px)` }], {
+					duration: this.laserSpeed,
+					fill: "forwards",
+				});
 
-		laserFireAnimation.finished.then((res) => {
-			laser.remove();
-		});
+				laserFireAnimation.finished.then((res) => {
+					laser.remove();
+				});
+				audio.play();
+
+				space.appendChild(laser);
+
+				audio.onended = function () {
+					audio.remove();
+				};
+			});
 	}
 
 	// movement
@@ -95,8 +128,7 @@ class Shooter {
 			this.y = this.y;
 		}
 
-		this.shooter.style.transform = `translate(${this.x}px, ${this.y}px)`;
-
+		this.currentPosition = [this.x, this.y];
 		this._checkLimits();
 	}
 
@@ -116,42 +148,54 @@ class Shooter {
 			this.y = bounds.bottomEdge;
 		}
 
-		this.shooter.style.transform = `translate(${this.x}px, ${this.y}px`;
+		this.currentPosition = [this.x, this.y];
 	}
 
 	// initialization
 
 	init() {
+		this.spaceRect = space.getBoundingClientRect();
 		const shooterDiv = document.createElement("div");
 		this.shooter = shooterDiv;
 		shooterDiv.classList.add("shooter");
+		const toolTip = document.createElement("div");
+		this.toolTipDiv = toolTip;
+		toolTip.classList.add("shooter__tooltip");
+		shooterDiv.appendChild(toolTip);
 		space.appendChild(shooterDiv);
 		this.shooterWidth = shooterDiv.offsetWidth;
 
 		this._setImage();
+		this._setLives();
+		this._setActionHandlers();
 		this._setInitialPosition();
 		this._setMovementBoundaries();
-		this._setActionHandlers();
 	}
 
 	_setImage() {
 		import(`../assets/fighter/${this.color}.png`).then((res) => {
 			this.shooter.style.backgroundImage = `url(${res.default})`;
+			const hudShooterImg = document.querySelector(".hud__shooter-img");
+			hudShooterImg.style.backgroundImage = `url(${res.default})`;
 		});
 	}
 
+	_setLives() {
+		hudShooterLives.innerText = `x${this.lives}`;
+	}
+
 	_setInitialPosition() {
-		this.x = spaceRight / 2 - this.shooter.offsetWidth / 2;
-		this.y = spaceBottom - this.shooter.offsetHeight - 20;
-		this.shooter.style.transform = `translate(${this.x}px, ${this.y}px)`;
+		this.x = this.spaceRect.right / 2 - this.shooter.offsetWidth / 2;
+		this.y = this.spaceRect.bottom - this.shooter.offsetHeight;
+		this.currentPosition = [this.x, this.y];
 	}
 
 	_setMovementBoundaries() {
 		this.boundaries = {
-			topEdge: spaceBottom * 0.75,
-			bottomEdge: spaceBottom - this.shooter.offsetHeight,
-			leftEdge: spaceLeft,
-			rightEdge: spaceRight - this.shooter.offsetWidth,
+			topEdge: this.spaceRect.bottom * 0.75,
+			bottomEdge: this.spaceRect.bottom - this.shooter.offsetHeight,
+			leftEdge: this.spaceRect.left,
+			rightEdge: this.spaceRect.right - this.shooter.offsetWidth,
 		};
 	}
 
@@ -168,6 +212,9 @@ class Shooter {
 			}
 			if (e.key === "ArrowRight") {
 				this.controlKeys[e.key] = true;
+			}
+			if (e.key === "Shift") {
+				this.activateShield();
 			}
 		});
 

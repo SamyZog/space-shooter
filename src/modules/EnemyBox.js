@@ -1,5 +1,6 @@
 import { space, spaceLeft, spaceRight } from "./elements";
 import Enemy from "./Enemy";
+import { game } from "./start";
 
 class EnemyBox {
 	constructor({ difficulty, enemySpeed, laserSpeed, enemyColumns, enemyRows, enemyLaserColor, height, width }) {
@@ -115,6 +116,7 @@ class EnemyBox {
 				rows: this.enemyRows,
 			});
 			enemy.init();
+			game.enemyInstances.push(enemy);
 		});
 	}
 }

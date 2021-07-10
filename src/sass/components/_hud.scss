@@ -1,17 +1,51 @@
 .hud {
 	height: 0;
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 	align-items: center;
-	background-color: var(--tint2);
+	background-color: var(--tint1);
+	gap: var(--gap);
 	opacity: 1;
 	padding: 0 var(--hud-padding);
-	transition-duration: 200ms;
+	z-index: 10;
+
+	& > * {
+		height: 70%;
+	}
+
+	&__lives {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: var(--gap-s);
+	}
+
+	&__shooter-img {
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		width: 40px;
+		height: inherit;
+	}
+
+	&__shooter-lives {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 2rem;
+	}
+
+	&__score {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		font-size: 2rem;
+		width: 6ch;
+	}
 
 	&__cooldown-meter {
 		position: relative;
-		background-image: linear-gradient(to bottom, red, yellow);
-		height: 50%;
+		background-image: linear-gradient(to bottom, var(--tint2), var(--light));
 		width: 10px;
 		border-radius: 10px;
 		overflow: hidden;
