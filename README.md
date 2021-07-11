@@ -3,6 +3,7 @@
 # Index
 
 -   [Demo](#demo)
+-   [Instructions](#instructions)
 -   [Hosting](#host)
 -   [Development phase](#dev-phase)
 -   [Tech Stack / Dependencies](#deps)
@@ -16,6 +17,14 @@ A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
 <h2 id="demo">Demo</h2>
 
 [Space Shooter](https://samyzog.github.io/space-shooter/)
+
+<h2 id="demo">Instructions</h2>
+
+-   move Up: 🠅
+-   move Down: 🠇
+-   move Left: 🠄
+-   move Right: 🠆
+-   shoot: <kbd>&nbsp;&nbsp;Space&nbsp;&nbsp;</kbd>
 
 <h2 id="host">Hosting</h2>
 
@@ -33,9 +42,9 @@ manipulation, OOP, array methods and different web API's:
 
 <h2 id="deps">Tech Stack / Dependencies</h2>
 
--   [HTML]()
+-   [HTML](#)
 -   [Sass](https://sass-lang.com/)
--   [JavaScript]()
+-   [JavaScript](#)
 
 <h2 id="run">Run Locally</h2>
 
