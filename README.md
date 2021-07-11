@@ -24,7 +24,7 @@ A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
     attributes
 -   Choose between different fighter classes, with each class having its own attributes
 -   Choose different space background
--   Background image moves to simulate flying through space
+-   Background image is animated to simulate flying through space
 -   Score and lives count are updated live on the hud
 -   The laser of the user controlled fighter jams when it is used too much, and needs some time to cooldown, this is
     visually represented on the HUD by a cooldown meter (the cooldown period depends on fighter class)
