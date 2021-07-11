@@ -85,12 +85,15 @@ class Enemy {
 	// initialization
 
 	init() {
-		// this._setImage();
+		console.log(this.enemyDiv);
+		this._setImage();
 		setTimeout(() => this.randomizeShooting(), this.interval);
 	}
 
 	_setImage() {
-		import(`../assets/enemy/${this.difficulty}.png`).then((res) => {});
+		import(`../assets/enemy/${this.difficulty}.png`).then((res) => {
+			this.enemyDiv.style.backgroundImage = `url(${res.default})`;
+		});
 	}
 }
 

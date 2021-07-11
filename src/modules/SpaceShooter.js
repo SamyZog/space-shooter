@@ -52,7 +52,9 @@ class SpaceShooter {
 					this.enemyBox = new EnemyBox(difficultySettings);
 					this.enemyBox.init();
 					this.setPauseHandler();
-					this.startGame();
+					setTimeout(() => {
+						this.startGame();
+					});
 					cooldownMeter.style.display = "block";
 					hudScore.innerText = 0;
 					this.startTime = Date.now();

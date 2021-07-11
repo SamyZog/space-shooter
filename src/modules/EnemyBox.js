@@ -98,6 +98,8 @@ class EnemyBox {
 
 			const enemyDiv = document.createElement("div");
 			enemyDiv.classList.add("enemy");
+			enemyDiv.style.height = `${this.height}px`;
+			enemyDiv.style.width = `${this.width}px`;
 
 			enemyCell.appendChild(enemyDiv);
 			this.enemyBox.appendChild(enemyCell);
