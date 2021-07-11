@@ -9,7 +9,7 @@ class Enemy {
 		this.laserSpeed = laserSpeed;
 		this.enemyLaserColor = enemyLaserColor;
 		this.columns = columns;
-		this.canShoot = true;
+		this.canShoot = false;
 		this.enemyX = null;
 		this.enemyY = null;
 		this.enemyWidth = null;

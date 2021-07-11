@@ -10,7 +10,7 @@ class Shooter {
 		this.lives = game.difficultySettings.lives;
 		this.color = color;
 		this.speed = speed;
-		this.canShoot = true;
+		this.canShoot = false;
 		this.coolDownBarHeightLevel = 0;
 		this.incrementLevel = 20;
 		this.decrementLevel = 1;

@@ -41,23 +41,31 @@ class SpaceShooter {
 			modalStatsBox.style.display = "none";
 			modalActionBox.style.display = "none";
 			modalMsg.innerText = msg;
+			this.shooter = new Shooter(shooterSettings);
+			this.shooter.init();
+			this.enemyBox = new EnemyBox(difficultySettings);
+			this.enemyBox.init();
 			setTimeout(() => {
 				msg = this.startGameMsgs.go;
 				modalMsg.innerText = msg;
 				setTimeout(() => {
 					this.resetModal();
 					this.moveCanvas();
-					this.shooter = new Shooter(shooterSettings);
-					this.shooter.init();
-					this.enemyBox = new EnemyBox(difficultySettings);
-					this.enemyBox.init();
 					this.setPauseHandler();
+					this.authorizeShooting();
 					this.startGame();
 					cooldownMeter.style.display = "block";
 					hudScore.innerText = 0;
 					this.startTime = Date.now();
 				}, 1000);
 			}, 1000);
+		};
+
+		this.authorizeShooting = () => {
+			this.enemyInstances.forEach((instance) => {
+				instance.canShoot = true;
+			});
+			this.shooter.canShoot = true;
 		};
 
 		this.resetModal = () => {
