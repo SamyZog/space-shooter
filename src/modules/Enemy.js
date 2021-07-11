@@ -1,4 +1,4 @@
-import { space, spaceBottom } from "./elements";
+import { space } from "./elements";
 
 class Enemy {
 	constructor({ enemyDiv, id, difficulty, laserSpeed, enemyLaserColor, columns }) {
@@ -74,10 +74,13 @@ class Enemy {
 		enemyLaser.style.top = `${this.enemyY + this.enemyDiv.offsetHeight}px`;
 		enemyLaser.style.left = `${this.enemyX + this.enemyDiv.offsetWidth / 2}px`;
 
-		const enemylaserFireAnimation = enemyLaser.animate([{ transform: `translateY(${spaceBottom}px)` }], {
-			duration: this.laserSpeed,
-			fill: "forwards",
-		});
+		const enemylaserFireAnimation = enemyLaser.animate(
+			[{ transform: `translateY(${space.getBoundingClientRect().bottom}px)` }],
+			{
+				duration: this.laserSpeed,
+				fill: "forwards",
+			},
+		);
 
 		enemylaserFireAnimation.finished.then((res) => {
 			enemyLaser.remove();

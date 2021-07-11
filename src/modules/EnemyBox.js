@@ -1,4 +1,4 @@
-import { space, spaceBottom, spaceRight } from "./elements";
+import { space } from "./elements";
 import Enemy from "./Enemy";
 import { game } from "./start";
 
@@ -32,7 +32,6 @@ class EnemyBox {
 	_move() {
 		this._moveHorizontally();
 		this._moveVertically();
-		console.log(spaceBottom);
 	}
 
 	_moveHorizontally() {
@@ -53,7 +52,7 @@ class EnemyBox {
 			this.enemySpeed += 0.25;
 			this.direction = 1;
 		}
-		if (this.enemyBoxRect.right > spaceRight) {
+		if (this.enemyBoxRect.right > space.getBoundingClientRect().right) {
 			this.top += this.height;
 			this.enemyBox.style.top = `${this.top}px`;
 			this.enemySpeed += 0.25;
@@ -76,8 +75,8 @@ class EnemyBox {
 		this.enemyBoxWidth = enemyContainer.offsetWidth;
 		this.leftStartPosition = 0;
 		this.currentLeftPosition = 0;
-		this.rightStartPosition = spaceRight - this.enemyBoxWidth;
-		this.currentRightPosition = spaceRight - this.enemyBoxWidth;
+		this.rightStartPosition = space.getBoundingClientRect().right - this.enemyBoxWidth;
+		this.currentRightPosition = space.getBoundingClientRect().right - this.enemyBoxWidth;
 	}
 
 	get totalEnemies() {

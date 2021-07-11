@@ -1,5 +1,3 @@
-import { spaceRight } from "./elements";
-
 const GAME_SETTING_OPTIONS = {
 	difficultySettings: {
 		EASY: {
@@ -42,19 +40,19 @@ const GAME_SETTING_OPTIONS = {
 			laserSpeed: 2000,
 			laserCoolDownPeriod: 1500,
 			color: "red",
-			speed: spaceRight / 300,
+			speed: window.innerWidth / 300,
 		},
 		BLUE: {
 			laserSpeed: 1500,
 			laserCoolDownPeriod: 2000,
 			color: "blue",
-			speed: spaceRight / 450,
+			speed: window.innerWidth / 450,
 		},
 		GREEN: {
 			laserSpeed: 1000,
 			laserCoolDownPeriod: 2500,
 			color: "green",
-			speed: spaceRight / 600,
+			speed: window.innerWidth / 600,
 		},
 	},
 };

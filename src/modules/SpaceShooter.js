@@ -11,7 +11,6 @@ import {
 	modalStatsBox,
 	modalTime,
 	space,
-	spaceBottom,
 } from "./elements";
 import EnemyBox from "./EnemyBox";
 import Shooter from "./Shooter";
@@ -36,7 +35,7 @@ class SpaceShooter {
 		// initiate game
 		this.init = () => {
 			let msg = this.startGameMsgs.ready;
-			modal.style.display = "flex";
+			modal.style.visibility = "visible";
 			modal.style.width = "30vw";
 			modalStatsBox.style.display = "none";
 			modalActionBox.style.display = "none";
@@ -70,7 +69,7 @@ class SpaceShooter {
 		};
 
 		this.resetModal = () => {
-			modal.style.display = "none";
+			modal.style.visibility = "hidden";
 			modal.style.width = "auto";
 			modalStatsBox.style.display = "grid";
 			modalActionBox.style.display = "flex";
@@ -153,7 +152,7 @@ class SpaceShooter {
 			});
 			modalStatsBox.style.display = "none";
 			modalActionBox.style.display = "none";
-			modal.style.display = "flex";
+			modal.style.visibility = "visible";
 			modal.style.width = "30vw";
 			modalMsg.innerText = "PAUSED!";
 		};
@@ -256,7 +255,10 @@ class SpaceShooter {
 
 			for (let i = 0; i < this.enemyInstances.length; i++) {
 				const r2 = this.enemyInstances[i].enemyDiv.getBoundingClientRect();
-				if (r2.bottom > spaceBottom - hud.offsetHeight || !this.checkProximity(r1, r2)) {
+				if (
+					r2.bottom > space.getBoundingClientRect().bottom - hud.offsetHeight ||
+					!this.checkProximity(r1, r2)
+				) {
 					this.endGame("LOST");
 					break;
 				}

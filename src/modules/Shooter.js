@@ -1,4 +1,4 @@
-import { cooldownBar, hudShooterLives, space, spaceBottom } from "./elements";
+import { cooldownBar, hudShooterLives, space } from "./elements";
 import { game } from "./start";
 
 class Shooter {
@@ -88,10 +88,13 @@ class Shooter {
 		laser.style.top = `${this.shooterY - laser.offsetHeight}px`;
 		laser.style.left = `${this.shooterX + this.shooterWidth / 2}px`;
 
-		const laserFireAnimation = laser.animate([{ transform: `translateY(-${spaceBottom}px)` }], {
-			duration: this.laserSpeed,
-			fill: "forwards",
-		});
+		const laserFireAnimation = laser.animate(
+			[{ transform: `translateY(-${space.getBoundingClientRect().bottom}px)` }],
+			{
+				duration: this.laserSpeed,
+				fill: "forwards",
+			},
+		);
 
 		laserFireAnimation.finished.then((res) => {
 			laser.remove();
@@ -149,7 +152,6 @@ class Shooter {
 	// initialization
 
 	init() {
-		this.spaceRect = space.getBoundingClientRect();
 		const shooterDiv = document.createElement("div");
 		this.shooter = shooterDiv;
 		shooterDiv.classList.add("shooter");
@@ -180,17 +182,17 @@ class Shooter {
 	}
 
 	_setInitialPosition() {
-		this.x = this.spaceRect.right / 2 - this.shooter.offsetWidth / 2;
-		this.y = this.spaceRect.bottom - this.shooter.offsetHeight;
+		this.x = space.getBoundingClientRect().right / 2 - this.shooter.offsetWidth / 2;
+		this.y = space.getBoundingClientRect().bottom - this.shooter.offsetHeight;
 		this.currentPosition = [this.x, this.y];
 	}
 
 	_setMovementBoundaries() {
 		this.boundaries = {
-			topEdge: this.spaceRect.bottom * 0.75,
-			bottomEdge: this.spaceRect.bottom - this.shooter.offsetHeight,
-			leftEdge: this.spaceRect.left,
-			rightEdge: this.spaceRect.right - this.shooter.offsetWidth,
+			topEdge: space.getBoundingClientRect().bottom * 0.75,
+			bottomEdge: space.getBoundingClientRect().bottom - this.shooter.offsetHeight,
+			leftEdge: space.getBoundingClientRect().left,
+			rightEdge: space.getBoundingClientRect().right - this.shooter.offsetWidth,
 		};
 	}
 

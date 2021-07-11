@@ -3,6 +3,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
@@ -10,11 +11,11 @@
 	background-color: var(--tint2);
 	gap: var(--gap);
 	padding: var(--pad);
-	display: none;
+	visibility: hidden;
 	border-radius: var(--br);
 
 	&__main-msg {
-		font-size: 5rem;
+		font-size: 3rem;
 	}
 
 	&__stats {

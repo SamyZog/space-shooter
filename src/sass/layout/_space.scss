@@ -1,6 +1,7 @@
 .space {
 	position: relative;
 	background-image: url("../../assets/space/black.png");
-	height: 95vh;
+	height: 95%;
+	overflow: hidden;
 	z-index: -10;
 }
