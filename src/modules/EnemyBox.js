@@ -1,4 +1,4 @@
-import { space, spaceRight } from "./elements";
+import { space, spaceBottom, spaceRight } from "./elements";
 import Enemy from "./Enemy";
 import { game } from "./start";
 
@@ -32,6 +32,7 @@ class EnemyBox {
 	_move() {
 		this._moveHorizontally();
 		this._moveVertically();
+		console.log(spaceBottom);
 	}
 
 	_moveHorizontally() {
