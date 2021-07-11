@@ -86,7 +86,7 @@ class Enemy {
 
 	init() {
 		this._setImage();
-		setTimeout(() => this.randomizeShooting(), this.interval);
+		// setTimeout(() => this.randomizeShooting(), this.interval);
 	}
 
 	_setImage() {

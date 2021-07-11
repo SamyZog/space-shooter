@@ -1,6 +1,7 @@
 import {
 	cooldownBar,
 	cooldownMeter,
+	hud,
 	hudScore,
 	hudShooterLives,
 	modal,
@@ -10,6 +11,7 @@ import {
 	modalStatsBox,
 	modalTime,
 	space,
+	spaceBottom,
 } from "./elements";
 import EnemyBox from "./EnemyBox";
 import Shooter from "./Shooter";
@@ -93,6 +95,7 @@ class SpaceShooter {
 			this.enemyBox.actions();
 			this.monitorEnemyHit();
 			this.monitorShooterHit();
+			this.monitorEnemyPosition();
 			this.decrementCoolDownBarHeightLevel();
 			requestAnimationFrame(this.gameLoop);
 		};
@@ -186,6 +189,10 @@ class SpaceShooter {
 			modalMsg.innerText = `YOU ${outcome}!!!`;
 		};
 
+		this.checkProximity = (r1, r2) => {
+			return r1.top > r2.bottom || r1.right < r2.left || r1.left > r2.right || r1.bottom < r2.top;
+		};
+
 		this.monitorEnemyHit = () => {
 			const liveShooterLaserNodeList = document.querySelectorAll(".laser");
 
@@ -194,17 +201,16 @@ class SpaceShooter {
 
 				for (let i = 0; i < this.enemyInstances.length; i++) {
 					const r2 = this.enemyInstances[i].enemyDiv.getBoundingClientRect();
-					if (!(r1.top > r2.bottom || r1.right < r2.left || r1.left > r2.right || r1.bottom < r2.top)) {
-						if (this.enemyInstances.length === 0) {
-							this.endGame("WON");
-							this.gameEnded = true;
-							break;
-						}
+					if (!this.checkProximity(r1, r2)) {
 						this.updateScore();
 						this.enemyInstances[i].enemyDiv.remove();
 						this.enemyInstances[i].isDead = true;
 						this.enemyInstances.splice(i, 1);
 						laser.remove();
+						if (this.enemyInstances.length === 0) {
+							this.endGame("WON");
+							this.gameEnded = true;
+						}
 						break;
 					}
 				}
@@ -218,7 +224,7 @@ class SpaceShooter {
 			for (let i = 0; i < liveEnemyLaserNodeList.length; i++) {
 				const r2 = liveEnemyLaserNodeList[i].getBoundingClientRect();
 
-				if (!(r1.top > r2.bottom || r1.right < r2.left || r1.left > r2.right || r1.bottom < r2.top)) {
+				if (!this.checkProximity(r1, r2)) {
 					liveEnemyLaserNodeList[i].remove();
 					this.updateLives();
 					this.shooter.showToolTip(-1);
@@ -226,8 +232,19 @@ class SpaceShooter {
 						this.endGame("LOST");
 						this.gameEnded = true;
 						this.shooter.shooter.remove();
-						break;
 					}
+					break;
+				}
+			}
+		};
+
+		this.monitorEnemyPosition = () => {
+			const r1 = this.shooter.shooter.getBoundingClientRect();
+
+			for (let i = 0; i < this.enemyInstances.length; i++) {
+				const r2 = this.enemyInstances[i].enemyDiv.getBoundingClientRect();
+				if (r2.bottom > spaceBottom - hud.offsetHeight || !this.checkProximity(r1, r2)) {
+					this.endGame("LOST");
 					break;
 				}
 			}
