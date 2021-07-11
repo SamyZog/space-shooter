@@ -48,13 +48,13 @@ const GAME_SETTING_OPTIONS = {
 			laserSpeed: 1500,
 			laserCoolDownPeriod: 2000,
 			color: "blue",
-			speed: spaceRight / 500,
+			speed: spaceRight / 450,
 		},
 		GREEN: {
 			laserSpeed: 1000,
 			laserCoolDownPeriod: 2500,
 			color: "green",
-			speed: spaceRight / 700,
+			speed: spaceRight / 600,
 		},
 	},
 };
