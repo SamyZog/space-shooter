@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
 		output: {
 			// [name] = entry point name
 			filename: isDev ? "[name].[contenthash].js" : "[name].[contenthash].bundle.js",
-			path: path.resolve(__dirname, "dist"),
+			path: path.resolve(__dirname, "build"),
 			publicPath: "",
 			// output file name for asset
 			assetModuleFilename: "assets/[contenthash][ext][query]",
@@ -66,7 +66,12 @@ module.exports = (env, argv) => {
 						"css-loader",
 						"postcss-loader",
 						"resolve-url-loader",
-						"sass-loader",
+						{
+							loader: "sass-loader",
+							options: {
+								sourceMap: true,
+							},
+						},
 					],
 					sideEffects: true,
 				},
