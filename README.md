@@ -28,7 +28,7 @@ This project was a lot of fun to create. Being a gamer myself I loved every seco
 Building this small game has cemented a lot of the theoretical and practical knowledge I have in JavaScript, DOM
 manipulation, OOP, array methods and different web API's:
 
--   [requestAnimationFrame()](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame),
+-   [requestAnimationFrame()](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
 -   [Web Animations](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API)
 
 <h2 id="deps">Tech Stack / Dependencies</h2>
