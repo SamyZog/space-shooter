@@ -9,7 +9,7 @@ class Enemy {
 		this.laserSpeed = laserSpeed;
 		this.enemyLaserColor = enemyLaserColor;
 		this.columns = columns;
-		this.canShoot = false;
+		this.canShoot = true;
 		this.enemyX = null;
 		this.enemyY = null;
 		this.enemyWidth = null;
@@ -20,17 +20,21 @@ class Enemy {
 		return Math.ceil(Math.random() * 3000);
 	}
 
+	start() {
+		// setTimeout(() => this.randomizeShooting(), this.interval);
+	}
+
 	randomizeShooting() {
 		if (this.canShoot) {
 			this.interval;
 			this.timeOut = setTimeout(() => {
-				this.start();
+				this.startShooting();
 				this.randomizeShooting();
 			}, this.interval);
 		}
 	}
 
-	start() {
+	startShooting() {
 		const liveEnemyCellNodeList = document.querySelectorAll(".enemy-cell");
 		if (this._isPresent(liveEnemyCellNodeList) && this._hasClearShot(liveEnemyCellNodeList)) {
 			this.shoot();
@@ -86,7 +90,6 @@ class Enemy {
 
 	init() {
 		this._setImage();
-		setTimeout(() => this.randomizeShooting(), this.interval);
 	}
 
 	_setImage() {

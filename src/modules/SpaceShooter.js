@@ -41,10 +41,12 @@ class SpaceShooter {
 			modalStatsBox.style.display = "none";
 			modalActionBox.style.display = "none";
 			modalMsg.innerText = msg;
+
 			this.shooter = new Shooter(shooterSettings);
 			this.shooter.init();
 			this.enemyBox = new EnemyBox(difficultySettings);
 			this.enemyBox.init();
+
 			setTimeout(() => {
 				msg = this.startGameMsgs.go;
 				modalMsg.innerText = msg;
@@ -52,7 +54,6 @@ class SpaceShooter {
 					this.resetModal();
 					this.moveCanvas();
 					this.setPauseHandler();
-					this.authorizeShooting();
 					this.startGame();
 					cooldownMeter.style.display = "block";
 					hudScore.innerText = 0;
@@ -91,6 +92,10 @@ class SpaceShooter {
 
 		// start the game by calling the game loop
 		this.startGame = () => {
+			this.shooter.canShoot = true;
+			this.enemyInstances.forEach((instance) => {
+				instance.start();
+			});
 			requestAnimationFrame(this.gameLoop);
 		};
 

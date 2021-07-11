@@ -19,8 +19,6 @@ class EnemyBox {
 		this.top = 0;
 		this.leftStartPosition = 0;
 		this.currentLeftPosition = 0;
-		this.rightStartPosition = null;
-		this.currentRightPosition = null;
 	}
 
 	// to game engine
@@ -38,28 +36,26 @@ class EnemyBox {
 
 	_moveHorizontally() {
 		if (this.direction === 1) {
-			this.enemyBox.style.left = `${(this.leftStartPosition += this.enemySpeed)}px`;
+			this.enemyBox.style.left = `${(this.currentLeftPosition += this.enemySpeed)}px`;
 		}
 		if (this.direction === -1) {
-			this.enemyBox.style.left = `${(this.currentRightPosition -= this.enemySpeed)}px`;
+			this.enemyBox.style.left = `${(this.currentLeftPosition -= this.enemySpeed)}px`;
 		}
 	}
 
 	_moveVertically() {
 		this.enemyBoxRect = this.enemyBox.getBoundingClientRect();
 
-		if (this.enemyBoxRect.left < 0) {
+		if (this.enemyBoxRect.left < this.leftStartPosition) {
 			this.top += this.height;
 			this.enemyBox.style.top = `${this.top}px`;
 			this.enemySpeed += 0.25;
-			this.currentLeftPosition = this.leftStartPosition;
 			this.direction = 1;
 		}
 		if (this.enemyBoxRect.right > spaceRight) {
 			this.top += this.height;
 			this.enemyBox.style.top = `${this.top}px`;
 			this.enemySpeed += 0.25;
-			this.currentRightPosition = this.rightStartPosition;
 			this.direction = -1;
 		}
 	}
