@@ -74,13 +74,11 @@ class EnemyBox {
 		const enemyContainer = document.createElement("div");
 		this.enemyBox = enemyContainer;
 		enemyContainer.classList.add("enemy-box");
-
 		enemyContainer.style.gridTemplateColumns = `repeat(${this.enemyColumns}, ${this.width}px)`;
 		enemyContainer.style.gridTemplateRows = `repeat(${this.enemyRows}, ${this.height}px)`;
 
-		space.appendChild(enemyContainer);
-
 		this._populateEnemyContainer();
+		space.appendChild(enemyContainer);
 
 		this.enemyBoxWidth = enemyContainer.offsetWidth;
 		this.leftStartPosition = 0;
@@ -94,17 +92,15 @@ class EnemyBox {
 	}
 
 	_populateEnemyContainer() {
-		const enemyArray = [...Array(this.totalEnemies)].map((_, i, arr) => {
+		[...Array(this.totalEnemies)].forEach((_, i) => {
 			const enemyCell = document.createElement("div");
 			enemyCell.classList.add("enemy-cell");
-			this.enemyBox.appendChild(enemyCell);
-			return enemyCell;
-		});
 
-		enemyArray.forEach((enemyCell, i, arr) => {
 			const enemyDiv = document.createElement("div");
 			enemyDiv.classList.add("enemy");
+
 			enemyCell.appendChild(enemyDiv);
+			this.enemyBox.appendChild(enemyCell);
 
 			const enemy = new Enemy({
 				enemyDiv,
@@ -115,6 +111,7 @@ class EnemyBox {
 				columns: this.enemyColumns,
 				rows: this.enemyRows,
 			});
+
 			enemy.init();
 			game.enemyInstances.push(enemy);
 		});

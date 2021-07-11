@@ -57,6 +57,10 @@ class Shooter {
 		if (this.coolDownBarHeightLevel > 100) {
 			this.canShoot = false;
 			this.maxFireRateReachTime = Date.now();
+			setTimeout(() => {
+				this.coolDownBarHeightLevel = 1;
+				this.canShoot = true;
+			}, this.laserCoolDownPeriod);
 			return;
 		}
 
@@ -80,29 +84,20 @@ class Shooter {
 		const laser = document.createElement("div");
 		laser.classList.add("laser");
 
-		import("../assets/sound-effects/laser1.wav")
-			.then((res) => new Audio(res.default))
-			.then((audio) => {
-				laser.style.backgroundColor = `var(--${this.color})`;
-				laser.style.top = `${this.shooterY - laser.offsetHeight}px`;
-				laser.style.left = `${this.shooterX + this.shooterWidth / 2}px`;
+		laser.style.backgroundColor = `var(--${this.color})`;
+		laser.style.top = `${this.shooterY - laser.offsetHeight}px`;
+		laser.style.left = `${this.shooterX + this.shooterWidth / 2}px`;
 
-				const laserFireAnimation = laser.animate([{ transform: `translateY(-${spaceBottom}px)` }], {
-					duration: this.laserSpeed,
-					fill: "forwards",
-				});
+		const laserFireAnimation = laser.animate([{ transform: `translateY(-${spaceBottom}px)` }], {
+			duration: this.laserSpeed,
+			fill: "forwards",
+		});
 
-				laserFireAnimation.finished.then((res) => {
-					laser.remove();
-				});
-				audio.play();
+		laserFireAnimation.finished.then((res) => {
+			laser.remove();
+		});
 
-				space.appendChild(laser);
-
-				audio.onended = function () {
-					audio.remove();
-				};
-			});
+		space.appendChild(laser);
 	}
 
 	// movement

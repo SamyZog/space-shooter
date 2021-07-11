@@ -2,7 +2,7 @@
 	position: absolute;
 	width: var(--enemy-laser-w);
 	height: var(--enemy-laser-h);
-	transform: translate(-50%);
+	transform: translateX(-50%);
 	background-color: red;
 	z-index: -10;
 }

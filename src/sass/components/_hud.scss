@@ -44,6 +44,7 @@
 	}
 
 	&__cooldown-meter {
+		display: none;
 		position: relative;
 		background-image: linear-gradient(to bottom, var(--tint2), var(--light));
 		width: 10px;

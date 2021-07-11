@@ -213,11 +213,9 @@
 			color: var(--tint2);
 
 			&:disabled {
+				cursor: default;
 				background-color: var(--light);
 				color: var(--dark);
-			}
-
-			&:hover {
 			}
 		}
 	}
