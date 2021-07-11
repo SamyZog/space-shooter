@@ -1,4 +1,4 @@
-import { space, spaceLeft, spaceRight } from "./elements";
+import { space, spaceRight } from "./elements";
 import Enemy from "./Enemy";
 import { game } from "./start";
 
@@ -37,7 +37,6 @@ class EnemyBox {
 	}
 
 	_moveHorizontally() {
-		console.log(spaceLeft);
 		if (this.direction === 1) {
 			this.enemyBox.style.left = `${(this.leftStartPosition += this.enemySpeed)}px`;
 		}
