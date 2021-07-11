@@ -50,13 +50,7 @@ class SpaceShooter {
 				msg = this.startGameMsgs.go;
 				modalMsg.innerText = msg;
 				setTimeout(() => {
-					this.resetModal();
-					this.moveCanvas();
-					this.setPauseHandler();
 					this.startGame();
-					cooldownMeter.style.display = "block";
-					hudScore.innerText = 0;
-					this.startTime = Date.now();
 				}, 1000);
 			}, 1000);
 		};
@@ -91,6 +85,12 @@ class SpaceShooter {
 
 		// start the game by calling the game loop
 		this.startGame = () => {
+			this.resetModal();
+			this.moveCanvas();
+			this.setPauseHandler();
+			cooldownMeter.style.display = "block";
+			hudScore.innerText = 0;
+			this.startTime = Date.now();
 			this.shooter.canShoot = true;
 			this.enemyInstances.forEach((instance) => {
 				instance.start();
@@ -195,7 +195,7 @@ class SpaceShooter {
 			const secOutput = elapsedSecs < 10 ? `0${elapsedSecs}` : elapsedSecs;
 			const msOutput = elapsedMs < 100 ? `0${elapsedMs}` : elapsedMs;
 
-			modal.style.display = "flex";
+			modal.style.visibility = "visible";
 			modalTime.innerText = `${minOutput}:${secOutput}:${msOutput}`;
 			modalScore.innerText = `${this.playerScore}`;
 			modalMsg.innerText = `YOU ${outcome}!!!`;

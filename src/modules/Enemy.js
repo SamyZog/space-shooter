@@ -21,7 +21,7 @@ class Enemy {
 	}
 
 	start() {
-		// setTimeout(() => this.randomizeShooting(), this.interval);
+		setTimeout(() => this.randomizeShooting(), this.interval);
 	}
 
 	randomizeShooting() {

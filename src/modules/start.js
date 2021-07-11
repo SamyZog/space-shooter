@@ -136,7 +136,7 @@ const START = () => {
 		// instantiate the game class
 		game = new SpaceShooter(userGameSettings);
 		// remove the settings modal
-		settingsModal.style.display = "none";
+		settingsModal.remove();
 		// initiate game
 		game.init();
 	}
