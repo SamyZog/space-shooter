@@ -18,6 +18,17 @@ A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
 
 [Space Shooter](https://samyzog.github.io/space-shooter/)
 
+<h2 id="features">Features</h2>
+
+-   Adjustable difficulty level, with each difficulty providing its own class of enemies that each have different
+    attributes
+-   Choose between different fighter classes, with each class having its own attributes
+-   Choose different space background
+-   Background image moves to simulate flying through space
+-   Score and lives count are updated live on the hud
+-   The laser of the user controlled fighter jams when it is used too much, and needs some time to cooldown, this is
+    visually represented on the HUD by a cooldown meter (the cooldown period depends on fighter class)
+
 <h2 id="demo">Instructions</h2>
 
 -   move Up: 🠅
