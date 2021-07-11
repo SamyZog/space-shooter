@@ -23,12 +23,13 @@ This web app is hosted on [Github Pages](https://pages.github.com/)
 
 <h2 id="dev-phase">Development phase</h2>
 
-This project was a lot of fun to create. Being a gamer myself I loved every second of developing this small game.
+This project was a lot of fun to create. Being a gamer myself I loved every second of developing it.
 
-Building it has cemented a lot of the theoretical knowledge I have in JavaScript, DOM manipulation, OOP, array methods
-and different web API's:
-[requestAnimationFrame()](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame),
-[Web Animations](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API).
+Building this small game has cemented a lot of the theoretical and practical knowledge I have in JavaScript, DOM
+manipulation, OOP, array methods and different web API's:
+
+-   [requestAnimationFrame()](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame),
+-   [Web Animations](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API)
 
 <h2 id="deps">Tech Stack / Dependencies</h2>
 
