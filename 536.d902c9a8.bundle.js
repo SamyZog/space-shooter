@@ -1,0 +1,1 @@
+(self.webpackChunkspace_shooter=self.webpackChunkspace_shooter||[]).push([[536],{536:(s,e,p)=>{"use strict";s.exports=p.p+"assets/images/afbb487d.png"}}]);
