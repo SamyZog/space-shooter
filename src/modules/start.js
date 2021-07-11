@@ -2,7 +2,6 @@ import {
 	canvasOptionsButtons,
 	difficultyOptionsButtons,
 	fighterOptionsButtons,
-	hud,
 	restartGameBtn,
 	settingsModal,
 	space,
@@ -138,10 +137,6 @@ const START = () => {
 		game = new SpaceShooter(userGameSettings);
 		// remove the settings modal
 		settingsModal.style.display = "none";
-		// set height on hud to show it
-		hud.style.height = "5vh";
-		// change space (canvas) height to fit both hud and canvas at 100vh
-		space.style.height = "95vh";
 		// initiate game
 		game.init();
 	}
