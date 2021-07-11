@@ -85,7 +85,6 @@ class Enemy {
 	// initialization
 
 	init() {
-		console.log(this.enemyDiv);
 		this._setImage();
 		setTimeout(() => this.randomizeShooting(), this.interval);
 	}

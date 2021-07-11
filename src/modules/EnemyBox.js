@@ -37,22 +37,19 @@ class EnemyBox {
 	}
 
 	_moveHorizontally() {
-		let enemyBoxLeftStyle;
-
+		console.log(spaceLeft);
 		if (this.direction === 1) {
-			enemyBoxLeftStyle = this.currentLeftPosition += this.enemySpeed;
+			this.enemyBox.style.left = `${(this.leftStartPosition += this.enemySpeed)}px`;
 		}
 		if (this.direction === -1) {
-			enemyBoxLeftStyle = this.currentRightPosition -= this.enemySpeed;
+			this.enemyBox.style.left = `${(this.currentRightPosition -= this.enemySpeed)}px`;
 		}
-
-		this.enemyBox.style.left = `${enemyBoxLeftStyle}px`;
 	}
 
 	_moveVertically() {
 		this.enemyBoxRect = this.enemyBox.getBoundingClientRect();
 
-		if (this.enemyBoxRect.left < spaceLeft) {
+		if (this.enemyBoxRect.left < 0) {
 			this.top += this.height;
 			this.enemyBox.style.top = `${this.top}px`;
 			this.enemySpeed += 0.25;
