@@ -31,10 +31,10 @@ A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
 
 <h2 id="demo">Instructions</h2>
 
--   move Up: <kbd>Up</kbd>
--   move Down: <kbd>🠇</kbd>
--   move Left: <kbd>🠄</kbd>
--   move Right: <kbd>🠆</kbd>
+-   move Up: <kbd>&#8593;</kbd>
+-   move Down: <kbd>&#8595;</kbd>
+-   move Left: <kbd>&#8592;</kbd>
+-   move Right: <kbd>&#8594;</kbd>
 -   shoot: <kbd>&nbsp;&nbsp;Space&nbsp;&nbsp;</kbd>
 
 <h2 id="host">Hosting</h2>
