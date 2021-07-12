@@ -10,7 +10,7 @@
 -   [Run locally](#run)
 -   [Authors](#authors)
 
-<h2>Space Shooter&nbsp;&nbsp;<img src="src/assets/fighter/red.png" height="20"/></h2> 
+<h2>Space Shooter&nbsp;&nbsp;<img src="src/assets/fighter/red.png" height="20"/></h2>
 
 A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
 
@@ -31,10 +31,10 @@ A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
 
 <h2 id="demo">Instructions</h2>
 
--   move Up: <kbd>&#8593;</kbd>
--   move Down: <kbd>&#8595;</kbd>
--   move Left: <kbd>&#8592;</kbd>
--   move Right: <kbd>&#8594;</kbd>
+-   move Up: <kbd>&#8593;</kbd>, <kbd>W</kbd>
+-   move Down: <kbd>&#8595;</kbd>, <kbd>S</kbd>
+-   move Left: <kbd>&#8592;</kbd>, <kbd>A</kbd>
+-   move Right: <kbd>&#8594;</kbd>, <kbd>D</kbd>
 -   shoot: <kbd>&nbsp;&nbsp;Space&nbsp;&nbsp;</kbd>
 
 <h2 id="host">Hosting</h2>

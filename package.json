@@ -9,7 +9,6 @@
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build",
 		"start": "webpack serve --mode=development",
-		"server": "http-server build",
 		"build": "webpack --mode=production",
 		"update": "npx npm-check-updates -u && npm install"
 	},

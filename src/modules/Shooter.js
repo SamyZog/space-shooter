@@ -19,13 +19,7 @@ class Shooter {
 		this.isDead = false;
 		this.x = null;
 		this.y = null;
-		this.controlKeys = {
-			ArrowLeft: false,
-			ArrowRight: false,
-			ArrowUp: false,
-			ArrowDown: false,
-			[" "]: false,
-		};
+		this.controlKeys = {};
 	}
 
 	showToolTip(msg) {
@@ -106,22 +100,22 @@ class Shooter {
 	// movement
 
 	_move() {
-		if (this.controlKeys.ArrowUp) {
+		if (this.controlKeys["w"] || this.controlKeys["W"] || this.controlKeys["ArrowUp"]) {
 			this.x = this.x;
 			this.y -= this.speed;
 		}
 
-		if (this.controlKeys.ArrowDown) {
+		if (this.controlKeys["s"] || this.controlKeys["S"] || this.controlKeys["ArrowDown"]) {
 			this.x = this.x;
 			this.y += this.speed;
 		}
 
-		if (this.controlKeys.ArrowLeft) {
+		if (this.controlKeys["a"] || this.controlKeys["A"] || this.controlKeys["ArrowLeft"]) {
 			this.x -= this.speed;
 			this.y = this.y;
 		}
 
-		if (this.controlKeys.ArrowRight) {
+		if (this.controlKeys["d"] || this.controlKeys["D"] || this.controlKeys["ArrowRight"]) {
 			this.x += this.speed;
 			this.y = this.y;
 		}
@@ -198,34 +192,41 @@ class Shooter {
 
 	_setActionHandlers() {
 		document.body.addEventListener("keydown", (e) => {
-			if (e.key === "ArrowUp") {
+			const up = e.key === "W" || e.key === "w" || e.key === "ArrowUp";
+			const right = e.key === "D" || e.key === "d" || e.key === "ArrowRight";
+			const left = e.key === "A" || e.key === "a" || e.key === "ArrowLeft";
+			const down = e.key === "S" || e.key === "s" || e.key === "ArrowDown";
+
+			if (up) {
 				this.controlKeys[e.key] = true;
 			}
-			if (e.key === "ArrowDown") {
+			if (down) {
 				this.controlKeys[e.key] = true;
 			}
-			if (e.key === "ArrowLeft") {
+			if (right) {
 				this.controlKeys[e.key] = true;
 			}
-			if (e.key === "ArrowRight") {
+			if (left) {
 				this.controlKeys[e.key] = true;
-			}
-			if (e.key === "Shift") {
-				this.activateShield();
 			}
 		});
 
 		document.body.addEventListener("keyup", (e) => {
-			if (e.key === "ArrowLeft") {
+			const up = e.key === "W" || e.key === "w" || e.key === "ArrowUp";
+			const right = e.key === "D" || e.key === "d" || e.key === "ArrowRight";
+			const left = e.key === "A" || e.key === "a" || e.key === "ArrowLeft";
+			const down = e.key === "S" || e.key === "s" || e.key === "ArrowDown";
+
+			if (up) {
 				this.controlKeys[e.key] = false;
 			}
-			if (e.key === "ArrowRight") {
+			if (down) {
 				this.controlKeys[e.key] = false;
 			}
-			if (e.key === "ArrowUp") {
+			if (right) {
 				this.controlKeys[e.key] = false;
 			}
-			if (e.key === "ArrowDown") {
+			if (left) {
 				this.controlKeys[e.key] = false;
 			}
 			if (e.key === " ") {
