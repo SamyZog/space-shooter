@@ -41,7 +41,6 @@ module.exports = (env, argv) => {
 
 		devServer: {
 			contentBase: path.join(__dirname, "dist"),
-			writeToDisk: true,
 			open: {
 				// key is same as entry point name
 				app: ["chrome", "--incognito"],
