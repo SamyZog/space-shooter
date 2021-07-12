@@ -10,7 +10,7 @@
 -   [Run locally](#run)
 -   [Authors](#authors)
 
-<h2>Space Shooter</h2>
+<h2>Space Shooter</h2> <img src="space-shooter/src/assets/fighter/red.png" />
 
 A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
 
