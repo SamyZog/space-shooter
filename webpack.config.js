@@ -100,11 +100,9 @@ module.exports = (env, argv) => {
 				filename: isDev ? "[name].css" : "[contenthash].min.css",
 			}),
 			new CleanWebpackPlugin(),
-			new WorkboxPlugin.GenerateSW({
-				// these options encourage the ServiceWorkers to get in there fast
-				// and not allow any straggling "old" SWs to hang around
-				clientsClaim: true,
-				skipWaiting: true,
+			new WorkboxPlugin.InjectManifest({
+				swSrc: "./src/sw.js",
+				swDest: "sw.js",
 			}),
 		],
 	};
