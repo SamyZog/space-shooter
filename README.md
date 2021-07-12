@@ -31,7 +31,7 @@ A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
 
 <h2 id="demo">Instructions</h2>
 
--   move Up: <kbd>🠅</kbd>
+-   move Up: <kbd>Up</kbd>
 -   move Down: <kbd>🠇</kbd>
 -   move Left: <kbd>🠄</kbd>
 -   move Right: <kbd>🠆</kbd>
