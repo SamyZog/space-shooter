@@ -20,7 +20,6 @@ A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
 
 <h2 id="features">Features</h2>
 
--   Playable offline
 -   Adjustable difficulty level, with each difficulty providing its own class of enemies that each have different
     attributes
 -   Choose between different fighter classes, with each class having its own attributes
