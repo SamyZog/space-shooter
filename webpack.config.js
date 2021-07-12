@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const WorkboxPlugin = require("workbox-webpack-plugin");
 
 module.exports = (env, argv) => {
 	// check for mode
@@ -99,10 +98,6 @@ module.exports = (env, argv) => {
 				filename: isDev ? "[name].css" : "[contenthash].min.css",
 			}),
 			new CleanWebpackPlugin(),
-			new WorkboxPlugin.InjectManifest({
-				swSrc: "./src/sw.js",
-				swDest: "sw.js",
-			}),
 		],
 	};
 };
