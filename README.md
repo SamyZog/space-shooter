@@ -1,7 +1,7 @@
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/organization/repository)
 
 # Index
-
+-   [Title](#title)
 -   [Demo](#demo)
 -   [Instructions](#instructions)
 -   [Hosting](#host)
@@ -10,7 +10,7 @@
 -   [Run locally](#run)
 -   [Authors](#authors)
 
-<h2>Space Shooter&nbsp;&nbsp;<img src="src/assets/fighter/red.png" height="20"/></h2>
+<h2 id="#title">Space Shooter&nbsp;&nbsp;<img src="src/assets/fighter/red.png" height="20"/></h2>
 
 A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
 
