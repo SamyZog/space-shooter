@@ -213,8 +213,8 @@
 
 			&:disabled {
 				cursor: default;
-				background-color: var(--light);
-				color: var(--dark);
+				background-color: gray;
+				color: darkgray;
 			}
 		}
 	}

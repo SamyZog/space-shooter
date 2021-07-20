@@ -25,3 +25,10 @@ button {
 		color: var(--light);
 	}
 }
+
+.start {
+	&__hint {
+		padding-top: 2rem;
+		color: var(--light);
+	}
+}
