@@ -10,7 +10,7 @@
 
 <h2 id="title">Space Shooter&nbsp;&nbsp;<img src="src/assets/fighter/red.png" height="20"/></h2>
 
-A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game.
+A [space-invaders](https://en.wikipedia.org/wiki/Space_Invaders) like game, made using HTML, CSS and JavaSscript. Bundled with my custom Webpack config. Please note that this game is best played on large screens and a keyboard input.
 
 <h2 id="demo">Demo</h2>
 
@@ -51,9 +51,9 @@ manipulation, OOP, array methods and different web API's:
 
 <h2 id="deps">Tech Stack / Dependencies</h2>
 
--   [HTML](#)
--   [Sass](https://sass-lang.com/)
--   [JavaScript](#)
+-   [html](#)
+-   [sass](https://sass-lang.com/)
+-   [javascript](#)
 
 <h2 id="run">Run Locally</h2>
 
